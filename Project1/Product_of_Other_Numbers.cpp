@@ -38,8 +38,8 @@ vector<int> productOthers(vector<int> arg)
 	return result;
 }
 
-int main()
-//int Product_of_Other_Numbers
+//int main()
+int Product_of_Other_Numbers()
 {
 	vector<int> arg = { 1, 7, 3, 4 };
 	vector<int> result = productOthers(arg);
