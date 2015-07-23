@@ -67,6 +67,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Delete_Node.cpp" />
+    <ClCompile Include="Inflight_Entertainment.cpp" />
     <ClCompile Include="Longest_Increasing_Sequence.cpp" />
     <ClCompile Include="Prime.cpp" />
     <ClCompile Include="Prime2.cpp" />
