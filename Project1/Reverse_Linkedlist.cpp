@@ -53,8 +53,8 @@ Node* ReverseLinkedList(Node* list)
 	return newHead;
 }
 
-int main()
-// int Reverse_LinkedList
+//int main()
+int Reverse_LinkedList()
 {
 	Node n1(1, NULL);
 	Node n2(2, &n1);
