@@ -6,19 +6,9 @@
 #include <sstream>
 #include <math.h>
 #include <time.h>
+#include "HelperMethod.h"
 
 using namespace std;
-
-void printArray(const vector<int> arr)
-{
-	for (int i = 0; i < arr.size(); ++i)
-	{
-		printf("%d ", arr[i]);
-	}
-
-	printf("\n");
-}
-
 
 void shuffleArray(vector<int>& arr)
 {
@@ -41,7 +31,7 @@ int shuffle_array()
 	for (int i = 0; i < 1; ++i)
 	{
 		shuffleArray(arr);
-		printArray(arr);
+		HelperMethod::printArray(arr);
 	}
 
 	cout << endl;
