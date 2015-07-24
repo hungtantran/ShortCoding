@@ -8,8 +8,6 @@
 
 using namespace std;
 
-extern HelperMethod;
-
 void PrintDuplicate(vector<int>& arr)
 {
 	for (int i = 0; i < arr.size(); ++i)

@@ -11,7 +11,7 @@ void HelperMethod::printArray(const vector<int>& arr)
 	}
 
 	printf("\n");
-};
+}
 
 void HelperMethod::generateArray(vector<int>& arr, int size, int min, int max)
 {
@@ -20,4 +20,4 @@ void HelperMethod::generateArray(vector<int>& arr, int size, int min, int max)
 		int val = rand() % (max - min + 1) + min;
 		arr.emplace_back(val);
 	}
-};
+}
