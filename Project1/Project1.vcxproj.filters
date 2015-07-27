@@ -96,5 +96,8 @@
     <ClCompile Include="Match_Parenthesis.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="BinarySearchTree_Checker.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
