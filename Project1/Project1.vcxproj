@@ -74,6 +74,7 @@
     <ClCompile Include="HelperMethod.cpp" />
     <ClCompile Include="HelperMethod.h" />
     <ClCompile Include="Inflight_Entertainment.cpp" />
+    <ClCompile Include="LinkedList.cpp" />
     <ClCompile Include="Longest_Increasing_Sequence.cpp" />
     <ClCompile Include="Match_Parenthesis.cpp" />
     <ClCompile Include="Prime.cpp" />
@@ -81,6 +82,7 @@
     <ClCompile Include="Life_Universe_And_Everything.cpp" />
     <ClCompile Include="Basic_Data_Structures.cpp" />
     <ClCompile Include="Cake_Thief.cpp" />
+    <ClCompile Include="Princess_Farida_DP.cpp" />
     <ClCompile Include="Rand5_To_Rand7.cpp" />
     <ClCompile Include="Merging_Ranges.cpp" />
     <ClCompile Include="Product_of_Other_Numbers.cpp" />
