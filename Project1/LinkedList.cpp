@@ -117,8 +117,8 @@ Node* MergeLinkedList(Node* a, Node* b)
     return start;
 }
 
-int main()
-// int LinkedList
+// int main()
+int LinkedList()
 {
 
     Node a(10, NULL);
