@@ -71,6 +71,7 @@
     <ClCompile Include="Find_Duplicates.cpp">
       <FunctionLevelLinking Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</FunctionLevelLinking>
     </ClCompile>
+    <ClCompile Include="Heap.cpp" />
     <ClCompile Include="HelperMethod.cpp" />
     <ClCompile Include="HelperMethod.h" />
     <ClCompile Include="Inflight_Entertainment.cpp" />
@@ -96,6 +97,7 @@
     <ClCompile Include="SRM_144_Div1_300.cpp" />
     <ClCompile Include="String_Permutation.cpp" />
     <ClCompile Include="The_Next_Palindrome.cpp" />
+    <ClCompile Include="TowerOfHanoi.cpp" />
     <ClCompile Include="Trade_Apple_Stock.cpp" />
     <ClCompile Include="Tranform_the_expression.cpp" />
   </ItemGroup>

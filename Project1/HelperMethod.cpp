@@ -8,6 +8,100 @@
 
 using namespace std;
 
+int HelperMethod::LeftHeap(int index) {
+    return index * 2 + 1;
+}
+
+int HelperMethod::RightHeap(int index) {
+    return index * 2 + 2;
+}
+
+int HelperMethod::ParentHeap(int index) {
+    return (index - 1) / 2;
+}
+
+void HelperMethod::Heapify(std::vector<int>& arr) {
+    Heapify(arr, 0, arr.size());
+}
+
+void HelperMethod::Heapify(std::vector<int>& arr, int index, int heapSize) {
+    int left = LeftHeap(index);
+    int right = RightHeap(index);
+
+    int largest = index;
+    if (left < heapSize && arr[left] > arr[largest]) {
+        largest = left;
+    }
+
+    if (right < heapSize && arr[right] > arr[largest]) {
+        largest = right;
+    }
+
+    if (largest == index) {
+        return;
+    }
+
+    int tmp = arr[index];
+    arr[index] = arr[largest];
+    arr[largest] = tmp;
+
+    Heapify(arr, largest, heapSize);
+}
+
+void HelperMethod::BuildMaxHeap(std::vector<int>& arr) {
+    for (int i = arr.size() / 2; i >= 0; --i) {
+        Heapify(arr, i, arr.size());
+    }
+}
+
+void HelperMethod::HeapSort(std::vector<int>& arr) {
+    BuildMaxHeap(arr);
+
+    int heapSize = arr.size();
+    for (int i = arr.size() - 1; i > 0; --i) {
+        int tmp = arr[0];
+        arr[0] = arr[heapSize - 1];
+        arr[heapSize - 1] = tmp;
+
+        --heapSize;
+        Heapify(arr, 0, heapSize);
+    }
+}
+
+void HelperMethod::InsertHeap(std::vector<int>& arr, int val) {
+    arr.emplace_back(INT_MIN);
+    IncreaseKey(arr, arr.size() - 1, val);
+}
+
+void HelperMethod::IncreaseKey(std::vector<int>& arr, int index, int newVal) {
+    arr[index] = newVal;
+
+    int parent = ParentHeap(index);
+    int curIndex = index;
+    while (parent >= 0) {
+        if (arr[curIndex] > arr[parent]) {
+            int tmp = arr[parent];
+            arr[parent] = arr[curIndex];
+            arr[curIndex] = arr[parent];
+
+            curIndex = parent;
+            parent = ParentHeap(curIndex);
+        } else {
+            break;
+        }
+    }
+}
+
+int HelperMethod::RemoveLargestHeap(std::vector<int>& arr) {
+    int tmp = arr[0];
+    arr[0] = arr[arr.size() - 1];
+    arr.pop_back();
+
+    Heapify(arr);
+
+    return tmp;
+}
+
 void HelperMethod::printArray(const vector<int>& arr)
 {
     for (int i = 0; i < arr.size(); ++i)

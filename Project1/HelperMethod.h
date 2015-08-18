@@ -39,4 +39,25 @@ public:
     static Node_BinaryTree* generateBinarySearchTree(bool balance = true, int numVal = 31);
 
     static Node_BinaryTree* generateBinarySearchTree(bool balance, const std::vector<int>& val, int start, int end);
+
+    // Heap related methods
+    static void Heapify(std::vector<int>& arr);
+
+    static void Heapify(std::vector<int>& arr, int index, int heapSize);
+
+    static void IncreaseKey(std::vector<int>& arr, int index, int newVal);
+
+    static void InsertHeap(std::vector<int>& arr, int al);
+    
+    static int RemoveLargestHeap(std::vector<int>& arr);
+
+    static void HeapSort(std::vector<int>& arr);
+
+    static void BuildMaxHeap(std::vector<int>& arr);
+
+    static int LeftHeap(int index);
+
+    static int RightHeap(int index);
+
+    static int ParentHeap(int index);
 };
