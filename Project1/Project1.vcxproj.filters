@@ -126,5 +126,8 @@
     <ClCompile Include="Maximum_All_Subarray_Sizek.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SortNearlySortedArray.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

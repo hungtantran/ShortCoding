@@ -96,6 +96,7 @@
     <ClCompile Include="Shuffle_Array.cpp" />
     <ClCompile Include="Overlap_Rectangle.cpp" />
     <ClCompile Include="Evaluation_of_postfix.cpp" />
+    <ClCompile Include="SortNearlySortedArray.cpp" />
     <ClCompile Include="SRM_144_Div2_550.cpp" />
     <ClCompile Include="SRM_144_Div2_200.cpp" />
     <ClCompile Include="SRM_144_Div1_550.cpp" />
