@@ -111,5 +111,20 @@
     <ClCompile Include="Heap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Next_Greater_Elements.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Evaluation_of_postfix.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="InfixToPostfix.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PrintAllStringPermutation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Maximum_All_Subarray_Sizek.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -114,6 +114,8 @@ void HelperMethod::printArray(const vector<int>& arr)
 
 void HelperMethod::generateArray(vector<int>& arr, int size, int min, int max)
 {
+    srand(time(NULL));
+
 	for (int i = 0; i < size; ++i)
 	{
 		int val = rand() % (max - min + 1) + min;
