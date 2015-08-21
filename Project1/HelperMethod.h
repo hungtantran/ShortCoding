@@ -23,6 +23,16 @@ struct Node_BinaryTree
     void Print();
 
     void ToSortedArray(std::vector<int>& result);
+
+    void InsertBST(int val);
+
+    Node_BinaryTree* DeleteBST(int val);
+
+    Node_BinaryTree* SearchBST(int val);
+
+    Node_BinaryTree* MinNode();
+
+    Node_BinaryTree* MaxNode();
 };
 
 class HelperMethod

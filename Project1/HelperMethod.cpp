@@ -123,6 +123,109 @@ void HelperMethod::generateArray(vector<int>& arr, int size, int min, int max)
 	}
 }
 
+void Node_BinaryTree::InsertBST(int val)
+{
+    if (val < this->value)
+    {
+        if (this->leftNode == NULL)
+        {
+            Node_BinaryTree* newNode = new Node_BinaryTree();
+            newNode->value = val;
+            this->leftNode = newNode;
+        }
+        else
+        {
+            this->leftNode->InsertBST(val);
+        }
+    }
+    else
+    {
+        if (this->rightNode == NULL)
+        {
+            Node_BinaryTree* newNode = new Node_BinaryTree();
+            newNode->value = val;
+            this->rightNode = newNode;
+        }
+        else
+        {
+            this->rightNode->InsertBST(val);
+        }
+    }
+}
+
+Node_BinaryTree* Node_BinaryTree::MaxNode()
+{
+    if (this->rightNode == NULL)
+    {
+        return this;
+    }
+
+    return this->rightNode->MaxNode();
+}
+
+Node_BinaryTree* Node_BinaryTree::MinNode()
+{
+    if (this->leftNode == NULL)
+    {
+        return this;
+    }
+
+    return this->leftNode->MinNode();
+}
+
+Node_BinaryTree* Node_BinaryTree::DeleteBST(int val)
+{
+    if (val < this->value)
+    {
+        if (this->leftNode != NULL)
+        {
+            this->leftNode = this->leftNode->DeleteBST(val);
+        }
+    }
+    else if (val > this->value)
+    {
+        if (this->rightNode != NULL)
+        {
+            this->rightNode = this->rightNode->DeleteBST(val);
+        }
+    }
+    else
+    {
+        if (this->leftNode == NULL)
+        {
+            return this->rightNode;
+        }
+        else if (this->rightNode == NULL)
+        {
+            return this->leftNode;
+        }
+        else
+        {
+            Node_BinaryTree* nextSuccessor = this->rightNode->MaxNode();
+            this->value = nextSuccessor->value;
+            this->rightNode = this->rightNode->DeleteBST(this->value);
+        }
+    }
+
+    return this;
+}
+
+Node_BinaryTree* Node_BinaryTree::SearchBST(int val)
+{
+    if (val < this->value)
+    {
+        return this->leftNode->SearchBST(val);
+    }
+    else if (val > this->value)
+    {
+        return this->rightNode->SearchBST(val);
+    }
+    else
+    {
+        return this;
+    }
+}
+
 Node_BinaryTree* HelperMethod::generateBinarySearchTree(std::vector<int> vals, bool balance)
 {
     return generateBinarySearchTree(balance, vals, 0, vals.size() - 1);
