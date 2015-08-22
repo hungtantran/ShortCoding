@@ -1,38 +1,19 @@
 #include <iostream>
 #include <vector>
+#include "HelperMethod.h"
 
 using namespace std;
 
-struct Node {
-    int value;
-    Node* nextNode;
-
-    Node(int value, Node* nextNode) :
-        value(value), nextNode(nextNode)
-    {
-    }
-
-    void Print()
-    {
-        printf("%d ", value);
-
-        if (nextNode != NULL)
-        {
-            nextNode->Print();
-        }
-    }
-};
-
-void ReverseLinkedList(Node* node)
+void ReverseLinkedList(Node_LinkedList* node)
 {
     if (node == NULL)
     {
         return;
     }
 
-    Node* prev = NULL;
-    Node* cur = node;
-    Node* next = cur->nextNode;
+    Node_LinkedList* prev = NULL;
+    Node_LinkedList* cur = node;
+    Node_LinkedList* next = cur->nextNode;
 
     while (cur != NULL)
     {
@@ -47,11 +28,11 @@ void ReverseLinkedList(Node* node)
     }
 }
 
-Node* MergeLinkedList(Node* a, Node* b)
+Node_LinkedList* MergeLinkedList(Node_LinkedList* a, Node_LinkedList* b)
 {
-    Node* start = NULL;
+    Node_LinkedList* start = NULL;
     
-    Node* last = NULL;
+    Node_LinkedList* last = NULL;
     while (true)
     {
         if (a == NULL)
@@ -121,10 +102,10 @@ Node* MergeLinkedList(Node* a, Node* b)
 int LinkedList()
 {
 
-    Node a(10, NULL);
-    Node b(8, &a);
-    Node c(6, &b);
-    Node d(4, &c);
+    Node_LinkedList a(10, NULL);
+    Node_LinkedList b(8, &a);
+    Node_LinkedList c(6, &b);
+    Node_LinkedList d(4, &c);
     d.Print();
     cout << endl;
 
@@ -132,10 +113,10 @@ int LinkedList()
     a.Print();
     cout << endl;
 
-    Node e(9, NULL);
-    Node f(7, &e);
-    Node g(5, &f);
-    Node h(3, &g);
+    Node_LinkedList e(9, NULL);
+    Node_LinkedList f(7, &e);
+    Node_LinkedList g(5, &f);
+    Node_LinkedList h(3, &g);
     h.Print();
     cout << endl;
 
@@ -143,7 +124,7 @@ int LinkedList()
     e.Print();
     cout << endl;
 
-    Node* merged = MergeLinkedList(&a, &e);
+    Node_LinkedList* merged = MergeLinkedList(&a, &e);
     merged->Print();
     cout << endl;
 

@@ -35,6 +35,34 @@ struct Node_BinaryTree
     Node_BinaryTree* MaxNode();
 };
 
+struct Node_LinkedList {
+    int value;
+    Node_LinkedList* nextNode;
+    Node_LinkedList* previousNode;
+
+    Node_LinkedList() :
+        value(INT_MIN),
+        nextNode(NULL),
+        previousNode(NULL)
+    {
+    }
+
+    Node_LinkedList(int value, Node_LinkedList* nextNode) :
+        value(value), nextNode(nextNode)
+    {
+    }
+
+    void Print()
+    {
+        printf("%d ", value);
+
+        if (nextNode != NULL)
+        {
+            nextNode->Print();
+        }
+    }
+};
+
 class HelperMethod
 {
 public:

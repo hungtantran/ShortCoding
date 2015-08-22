@@ -102,6 +102,141 @@ Node_BinaryTree* InorderSucc(Node_BinaryTree* bst, int val, Node_BinaryTree* mos
     }
 }
 
+void sorted_order_printing_of_array_representing_complete_BST(const vector<int>& arrBst, int rootIndex)
+{
+    // Print left first
+    if (rootIndex * 2 + 1 < arrBst.size())
+    {
+        sorted_order_printing_of_array_representing_complete_BST(arrBst, rootIndex * 2 + 1);
+    }
+
+    // Print root
+    cout << arrBst[rootIndex] << " ";
+
+    // Print right last
+    if (rootIndex * 2 + 2 < arrBst.size())
+    {
+        sorted_order_printing_of_array_representing_complete_BST(arrBst, rootIndex * 2 + 2);
+    }
+}
+
+bool isBst(Node_BinaryTree* root, int& sizeOfLargestsSbBST)
+{
+    bool returnVal = true;
+
+    if (root == NULL)
+    {
+        sizeOfLargestsSbBST = 0;
+        return true;
+    }
+
+    int maxSize = 0;
+
+    int sizeLeft = 0;
+    bool left = isBst(root->leftNode, sizeLeft);
+
+    int sizeRight = 0;
+    bool right = isBst(root->rightNode, sizeRight);
+
+    if (left && right)
+    {
+        if (root->leftNode != NULL && root->leftNode->value > root->value)
+        {
+            returnVal = false;
+        }
+
+        if (root->rightNode != NULL && root->rightNode->value < root->value)
+        {
+            returnVal = false;
+        }
+
+        if (returnVal)
+        {
+            sizeOfLargestsSbBST = sizeLeft + sizeRight + 1;
+        }
+        else
+        {
+            sizeOfLargestsSbBST = sizeLeft > sizeRight ? sizeLeft : sizeRight;
+        }
+    }
+    else if (left)
+    {
+        sizeOfLargestsSbBST = sizeLeft;
+        returnVal = false;
+    }
+    else if (right)
+    {
+        sizeOfLargestsSbBST = sizeRight;
+        returnVal = false;
+    }
+
+    return returnVal;
+}
+
+Node_BinaryTree* remove_node_out_of_range_BST(Node_BinaryTree* root, int min, int max)
+{
+    if (root == NULL)
+    {
+        return NULL;
+    }
+
+    Node_BinaryTree* left = remove_node_out_of_range_BST(root->leftNode, min, max);
+    Node_BinaryTree* right = remove_node_out_of_range_BST(root->rightNode, min, max);
+    root->leftNode = left;
+    root->rightNode = right;
+
+    if (root->value < min)
+    {
+        delete(root);
+        return right;
+    }
+    else if (root->value > max)
+    {
+        delete(root);
+        return left;
+    }
+
+    return root;
+}
+
+void add_all_greater_value_to_node(Node_BinaryTree* root, int& add)
+{
+    if (root == NULL)
+    {
+        return;
+    }
+
+    add_all_greater_value_to_node(root->rightNode, add);
+
+    int oldRoot = root->value;
+    root->value = root->value + add;
+    add += oldRoot;
+
+    add_all_greater_value_to_node(root->leftNode, add);
+}
+
+int find_kth_smallest_element_BST(Node_BinaryTree* root, int& k)
+{
+    if (root == NULL)
+    {
+        return INT_MIN;
+    }
+
+    int leftResult = find_kth_smallest_element_BST(root->leftNode, k);
+    if (k == 0)
+    {
+        return leftResult;
+    }
+
+    k--;
+    if (k == 0)
+    {
+        return root->value;
+    }
+
+    return find_kth_smallest_element_BST(root->rightNode, k);
+}
+
 // int main()
 int BinarySearchTree_Checker()
 {
@@ -182,8 +317,8 @@ int Test_InsertSearchDeletePrintBST()
     return 0;
 }
 
-int main()
-// int Inorder_Succ()
+// int main()
+int Inorder_Succ()
 {
     Node_BinaryTree* bst = new Node_BinaryTree();
     bst->value = 50;
@@ -204,6 +339,273 @@ int main()
     {
         cout << "55 has no successor" << endl;
     }
+
+    int test;
+    cin >> test;
+
+    return 0;
+}
+
+// int main()
+int sorted_order_printing_of_array_representing_complete_BST()
+{
+    vector<int> arrBst = { 4, 2, 5, 1, 3 };
+
+    sorted_order_printing_of_array_representing_complete_BST(arrBst, 0);
+
+    int test;
+    cin >> test;
+
+    return 0;
+}
+
+Node_BinaryTree* linked_list_to_BST(Node_LinkedList** head, int size)
+{
+    if (*head == NULL || size == 0)
+    {
+        return NULL;
+    }
+
+    if (size == 1)
+    {
+        Node_BinaryTree* newRoot = new Node_BinaryTree();
+        newRoot->value = (*head)->value;
+        *head = (*head)->nextNode;
+        return newRoot;
+    }
+
+    Node_BinaryTree* leftTree = linked_list_to_BST(head, size / 2);
+    
+    Node_BinaryTree* newRoot = new Node_BinaryTree();
+    newRoot->value = (*head)->value;
+    *head = (*head)->nextNode;
+
+    int rightSize = size - size / 2 - 1;
+    Node_BinaryTree* rightTree = linked_list_to_BST(head, rightSize);
+
+    newRoot->leftNode = leftTree;
+    newRoot->rightNode = rightTree;
+
+    return newRoot;
+}
+
+Node_BinaryTree* construct_BST_from_preorderArr(vector<int> preOrderArr, int& index, int min, int max)
+{
+
+}
+
+Node_BinaryTree* construct_BST_from_preorderArr(vector<int> preOrderArr, int& index)
+{
+    
+}
+
+// int main()
+int print_size_of_largest_subBSt()
+{
+    Node_BinaryTree* n1 = new Node_BinaryTree();
+    Node_BinaryTree* n2 = new Node_BinaryTree();
+    Node_BinaryTree* n3 = new Node_BinaryTree();
+    Node_BinaryTree* n4 = new Node_BinaryTree();
+    Node_BinaryTree* n5 = new Node_BinaryTree();
+    Node_BinaryTree* n6 = new Node_BinaryTree();
+    Node_BinaryTree* n7 = new Node_BinaryTree();
+    Node_BinaryTree* n8 = new Node_BinaryTree();
+    Node_BinaryTree* n9 = new Node_BinaryTree();
+
+    n1->value = 50;
+    n2->value = 30;
+    n3->value = 60;
+    n4->value = 5;
+    n5->value = 20;
+    n6->value = 45;
+    n7->value = 70;
+    n8->value = 65;
+    n9->value = 80;
+
+    n1->leftNode = n2;
+    n1->rightNode = n3;
+
+    n2->leftNode = n4;
+    n2->rightNode = n5;
+
+    n3->leftNode = n6;
+    n3->rightNode = n7;
+
+    n7->leftNode = n8;
+    n7->rightNode = n9;
+
+    int sizeOfLargestsSbBST = 0;
+    isBst(n1, sizeOfLargestsSbBST);
+    cout << sizeOfLargestsSbBST << endl;
+
+    int test;
+    cin >> test;
+
+    return 0;
+}
+
+// int main()
+int remove_node_out_of_range_BST()
+{
+    Node_BinaryTree* n1 = new Node_BinaryTree();
+    Node_BinaryTree* n2 = new Node_BinaryTree();
+    Node_BinaryTree* n3 = new Node_BinaryTree();
+    Node_BinaryTree* n4 = new Node_BinaryTree();
+    Node_BinaryTree* n5 = new Node_BinaryTree();
+    Node_BinaryTree* n6 = new Node_BinaryTree();
+    Node_BinaryTree* n7 = new Node_BinaryTree();
+
+    n1->value = 6;
+    n2->value = -13;
+    n3->value = 14;
+    n4->value = -8;
+    n5->value = 13;
+    n6->value = 15;
+    n7->value = 7;
+
+    n1->leftNode = n2;
+    n1->rightNode = n3;
+    
+    n2->rightNode = n4;
+
+    n3->leftNode = n5;
+    n3->rightNode = n6;
+
+    n5->leftNode = n7;
+
+    Node_BinaryTree* newRoot = remove_node_out_of_range_BST(n1, -10, 13);
+    newRoot->Print();
+
+    int test;
+    cin >> test;
+
+    return 0;
+}
+
+// int main()
+int add_all_greater_value_to_node()
+{
+    Node_BinaryTree* n1 = new Node_BinaryTree();
+    Node_BinaryTree* n2 = new Node_BinaryTree();
+    Node_BinaryTree* n3 = new Node_BinaryTree();
+    Node_BinaryTree* n4 = new Node_BinaryTree();
+    Node_BinaryTree* n5 = new Node_BinaryTree();
+    Node_BinaryTree* n6 = new Node_BinaryTree();
+    Node_BinaryTree* n7 = new Node_BinaryTree();
+
+    n1->value = 50;
+    n2->value = 30;
+    n3->value = 70;
+    n4->value = 20;
+    n5->value = 40;
+    n6->value = 60;
+    n7->value = 80;
+
+    n1->leftNode = n2;
+    n1->rightNode = n3;
+
+    n2->leftNode = n4;
+    n2->rightNode = n5;
+
+    n3->leftNode = n6;
+    n3->rightNode = n7;
+
+    int sum = 0;
+    add_all_greater_value_to_node(n1, sum);
+    n1->Print();
+
+    int test;
+    cin >> test;
+
+    return 0;
+}
+
+// int main()
+int find_kth_smallest_element_BST()
+{
+    Node_BinaryTree* n1 = new Node_BinaryTree();
+    Node_BinaryTree* n2 = new Node_BinaryTree();
+    Node_BinaryTree* n3 = new Node_BinaryTree();
+    Node_BinaryTree* n4 = new Node_BinaryTree();
+    Node_BinaryTree* n5 = new Node_BinaryTree();
+    Node_BinaryTree* n6 = new Node_BinaryTree();
+    Node_BinaryTree* n7 = new Node_BinaryTree();
+
+    n1->value = 20;
+    n2->value = 8;
+    n3->value = 22;
+    n4->value = 4;
+    n5->value = 12;
+    n6->value = 10;
+    n7->value = 14;
+
+    n1->leftNode = n2;
+    n1->rightNode = n3;
+
+    n2->leftNode = n4;
+    n2->rightNode = n5;
+
+    n5->leftNode = n6;
+    n5->rightNode = n7;
+
+    for (int i = 1; i <= 10; ++i)
+    {
+        int k = i;
+        cout << find_kth_smallest_element_BST(n1, k) << endl;
+    }
+
+    int test;
+    cin >> test;
+
+    return 0;
+}
+
+// int main()
+int linked_list_to_BST()
+{
+    Node_LinkedList* n1 = new Node_LinkedList();
+    Node_LinkedList* n2 = new Node_LinkedList();
+    Node_LinkedList* n3 = new Node_LinkedList();
+    Node_LinkedList* n4 = new Node_LinkedList();
+    Node_LinkedList* n5 = new Node_LinkedList();
+    Node_LinkedList* n6 = new Node_LinkedList();
+    Node_LinkedList* n7 = new Node_LinkedList();
+    Node_LinkedList* n8 = new Node_LinkedList();
+
+    n1->value = 1;
+    n2->value = 2;
+    n3->value = 3;
+    n4->value = 4;
+    n5->value = 5;
+    n6->value = 6;
+    n7->value = 7;
+    n8->value = 8;
+
+    n1->nextNode = n2;
+    n2->nextNode = n3;
+    n3->nextNode = n4;
+    n4->nextNode = n5;
+    n5->nextNode = n6;
+    n6->nextNode = n7;
+    n7->nextNode = n8;
+
+    Node_LinkedList* tmp = n1;
+    Node_BinaryTree* root = linked_list_to_BST(&tmp, 8);
+    root->Print();
+
+    int test;
+    cin >> test;
+
+    return 0;
+}
+
+int main()
+// int construct_BST_from_preorderArr()
+{
+    vector<int> preOrderArr = { 20, 10, 11, 13, 12 };
+    int index = 0;
+    Node_BinaryTree* root = construct_BST_from_preorderArr(preOrderArr, index);
+    root->Print();
 
     int test;
     cin >> test;

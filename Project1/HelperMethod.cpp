@@ -357,4 +357,4 @@ void Node_BinaryTree::ToSortedArray(vector<int>& result)
     this->leftNode->ToSortedArray(result);
     result.emplace_back(this->value);
     this->rightNode->ToSortedArray(result);
-}
+};
