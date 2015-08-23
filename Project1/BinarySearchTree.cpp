@@ -391,12 +391,77 @@ Node_BinaryTree* linked_list_to_BST(Node_LinkedList** head, int size)
 
 Node_BinaryTree* construct_BST_from_preorderArr(vector<int> preOrderArr, int& index, int min, int max)
 {
+    if (index >= preOrderArr.size())
+    {
+        return NULL;
+    }
 
+    if (preOrderArr[index] < min || preOrderArr[index] > max)
+    {
+        return NULL;
+    }
+
+    Node_BinaryTree* newRoot = new Node_BinaryTree();
+    newRoot->value = preOrderArr[index];
+    ++index;
+
+    Node_BinaryTree* leftTree = construct_BST_from_preorderArr(preOrderArr, index, min, newRoot->value);
+
+    Node_BinaryTree* rightTree = construct_BST_from_preorderArr(preOrderArr, index, newRoot->value, max);
+
+    newRoot->leftNode = leftTree;
+    newRoot->rightNode = rightTree;
+
+    return newRoot;
 }
 
 Node_BinaryTree* construct_BST_from_preorderArr(vector<int> preOrderArr, int& index)
 {
-    
+    return construct_BST_from_preorderArr(preOrderArr, index, INT_MIN, INT_MAX);
+}
+
+bool check_if_each_node_BST_has_only_one_child(const vector<int>& preOrderArr, int& index, int min, int max)
+{
+    if (index >= preOrderArr.size())
+    {
+        return true;
+    }
+
+    if (preOrderArr[index] < min || preOrderArr[index] > max)
+    {
+        return false;
+    }
+
+    int curValue = preOrderArr[index];
+    ++index;
+
+    if (preOrderArr[index] < curValue)
+    {
+        if (!check_if_each_node_BST_has_only_one_child(preOrderArr, index, min, curValue))
+        {
+            return false;
+        }
+    }
+    else
+    {
+        if (!check_if_each_node_BST_has_only_one_child(preOrderArr, index, curValue, max))
+        {
+            return false;
+        }
+    }
+
+    if (index != preOrderArr.size())
+    {
+        return false;
+    }
+
+    return true;
+}
+
+bool check_if_each_node_BST_has_only_one_child(const vector<int>& preOrderArr)
+{
+    int index = 0;
+    return check_if_each_node_BST_has_only_one_child(preOrderArr, index, INT_MIN, INT_MAX);
 }
 
 // int main()
@@ -599,12 +664,18 @@ int linked_list_to_BST()
     return 0;
 }
 
-int main()
-// int construct_BST_from_preorderArr()
+// int main()
+int construct_BST_from_preorderArr()
 {
     vector<int> preOrderArr = { 20, 10, 11, 13, 12 };
     int index = 0;
     Node_BinaryTree* root = construct_BST_from_preorderArr(preOrderArr, index);
+    root->Print();
+
+    cout << endl;
+    vector<int> preOrderArr2 = { 10, 5, 1, 7, 40, 50 };
+    index = 0;
+    root = construct_BST_from_preorderArr(preOrderArr2, index);
     root->Print();
 
     int test;
@@ -612,3 +683,20 @@ int main()
 
     return 0;
 }
+
+// int main()
+int check_if_each_node_BST_has_only_one_child()
+{
+    vector<int> preOrderArr = { 20, 10, 11, 13, 12 };
+    cout << check_if_each_node_BST_has_only_one_child(preOrderArr) << endl;
+
+    cout << endl;
+    vector<int> preOrderArr2 = { 10, 5, 1, 7, 40, 50 };
+    cout << check_if_each_node_BST_has_only_one_child(preOrderArr2) << endl;
+
+    int test;
+    cin >> test;
+
+    return 0;
+}
+
