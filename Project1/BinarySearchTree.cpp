@@ -464,6 +464,45 @@ bool check_if_each_node_BST_has_only_one_child(const vector<int>& preOrderArr)
     return check_if_each_node_BST_has_only_one_child(preOrderArr, index, INT_MIN, INT_MAX);
 }
 
+void findPreSuc(Node_BinaryTree* root, Node_BinaryTree*& successor, Node_BinaryTree*& predecessor, int key)
+{
+    if (root == NULL)
+    {
+        return;
+    }
+
+    if (root->value == key)
+    {
+        if (root->leftNode != NULL)
+        {
+            predecessor = root->leftNode->MaxNode();
+        }
+        
+        if (root->rightNode != NULL)
+        {
+            successor = root->rightNode->MinNode();
+        }
+    }
+    else if (root->value > key)
+    {
+        if (successor == NULL || root->value < successor->value)
+        {
+            successor = root;
+        }
+
+        findPreSuc(root->leftNode, successor, predecessor, key);
+    }
+    else if (root->value < key)
+    {
+        if (predecessor == NULL || root->value > predecessor->value)
+        {
+            predecessor = root;
+        }
+
+        findPreSuc(root->rightNode, successor, predecessor, key);
+    }
+}
+
 // int main()
 int print_size_of_largest_subBSt()
 {
@@ -693,6 +732,108 @@ int check_if_each_node_BST_has_only_one_child()
     cout << endl;
     vector<int> preOrderArr2 = { 10, 5, 1, 7, 40, 50 };
     cout << check_if_each_node_BST_has_only_one_child(preOrderArr2) << endl;
+
+    int test;
+    cin >> test;
+
+    return 0;
+}
+
+// int main()
+int inorder_successor_predecessor_in_BST()
+{
+    Node_BinaryTree* n1 = new Node_BinaryTree();
+    Node_BinaryTree* n2 = new Node_BinaryTree();
+    Node_BinaryTree* n3 = new Node_BinaryTree();
+    Node_BinaryTree* n4 = new Node_BinaryTree();
+    Node_BinaryTree* n5 = new Node_BinaryTree();
+    Node_BinaryTree* n6 = new Node_BinaryTree();
+    Node_BinaryTree* n7 = new Node_BinaryTree();
+
+    n1->value = 50;
+    n2->value = 30;
+    n3->value = 70;
+    n4->value = 20;
+    n5->value = 40;
+    n6->value = 60;
+    n7->value = 80;
+
+    n1->leftNode = n2;
+    n1->rightNode = n3;
+
+    n2->leftNode = n4;
+    n2->rightNode = n5;
+
+    n3->leftNode = n6;
+    n3->rightNode = n7;
+
+    Node_BinaryTree* successor = NULL;
+    Node_BinaryTree* predecessor = NULL;
+    findPreSuc(n1, successor, predecessor, 65);
+
+    if (predecessor == NULL)
+    {
+        cout << "No predecessor" << endl;
+    }
+    else
+    {
+        cout << predecessor->value << endl;
+    }
+
+    if (successor == NULL)
+    {
+        cout << "No successor" << endl;
+    }
+    else
+    {
+        cout << successor->value << endl;
+    }
+
+    cout << endl;
+    successor = NULL;
+    predecessor = NULL;
+    findPreSuc(n1, successor, predecessor, 20);
+
+    if (predecessor == NULL)
+    {
+        cout << "No predecessor" << endl;
+    }
+    else
+    {
+        cout << predecessor->value << endl;
+    }
+
+    if (successor == NULL)
+    {
+        cout << "No successor" << endl;
+    }
+    else
+    {
+        cout << successor->value << endl;
+    }
+
+    cout << endl;
+    successor = NULL;
+    predecessor = NULL;
+    findPreSuc(n1, successor, predecessor, 80);
+
+    if (predecessor == NULL)
+    {
+        cout << "No predecessor" << endl;
+    }
+    else
+    {
+        cout << predecessor->value << endl;
+    }
+
+    if (successor == NULL)
+    {
+        cout << "No successor" << endl;
+    }
+    else
+    {
+        cout << successor->value << endl;
+    }
 
     int test;
     cin >> test;
