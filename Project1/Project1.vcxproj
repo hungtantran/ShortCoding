@@ -67,6 +67,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BinarySearchTree.cpp" />
+    <ClCompile Include="BinaryTree.cpp" />
     <ClCompile Include="Delete_Node.cpp" />
     <ClCompile Include="Find_Duplicates.cpp">
       <FunctionLevelLinking Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</FunctionLevelLinking>
@@ -102,6 +103,7 @@
     <ClCompile Include="SRM_144_Div2_200.cpp" />
     <ClCompile Include="SRM_144_Div1_550.cpp" />
     <ClCompile Include="SRM_144_Div1_300.cpp" />
+    <ClCompile Include="SRM_147_Div1_350.cpp" />
     <ClCompile Include="String_Permutation.cpp" />
     <ClCompile Include="The_Next_Palindrome.cpp" />
     <ClCompile Include="TowerOfHanoi.cpp" />

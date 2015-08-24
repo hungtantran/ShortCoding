@@ -5,13 +5,15 @@ struct Node_BinaryTree
     int value;
     Node_BinaryTree* leftNode;
     Node_BinaryTree* rightNode;
+    Node_BinaryTree* nextNode;
     int level;
     int parentVal;
 
     Node_BinaryTree() :
         value(INT_MIN),
         leftNode(NULL),
-        rightNode(NULL)
+        rightNode(NULL),
+        nextNode(NULL)
     {
     }
 

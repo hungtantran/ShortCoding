@@ -132,5 +132,11 @@
     <ClCompile Include="LongestConsecutivePath.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SRM_147_Div1_350.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BinaryTree.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

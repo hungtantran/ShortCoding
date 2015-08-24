@@ -327,7 +327,14 @@ void Node_BinaryTree::Print()
             lastLevel = cur->level;
         }
 
-        std::cout << cur->value << "(" << cur->level << ", " << cur->parentVal << ")" << "  ";
+        if (cur->nextNode == NULL)
+        {
+            std::cout << cur->value << "(" << cur->level << ", " << cur->parentVal << ")" << "  ";
+        }
+        else
+        {
+            std::cout << cur->value << "(" << cur->level << ", " << cur->parentVal << ", " << cur->nextNode->value << ")" << "  ";
+        }
 
         Node_BinaryTree* left = cur->leftNode;
         if (left != NULL)
