@@ -88,8 +88,8 @@ int shortest_chain_to_reach_target_word(const set<string>& dic, const string& st
 	return shortestDistance;
 }
 
-int main()
-// int shortest_chain_to_reach_target_word()
+// int main()
+int shortest_chain_to_reach_target_word()
 {
 	set<string> dic;
 	dic.insert("poon");

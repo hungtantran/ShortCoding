@@ -141,5 +141,8 @@
     <ClCompile Include="Shortest_chain_to_reach_target_word.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Recursion_DP_Cracking_CI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
