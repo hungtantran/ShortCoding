@@ -138,5 +138,8 @@
     <ClCompile Include="BinaryTree.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Shortest_chain_to_reach_target_word.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
