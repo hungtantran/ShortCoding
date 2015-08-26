@@ -421,6 +421,46 @@ void vertical_sum_BT(const Node_BinaryTree* root, map<int, int>& result)
     vertical_sum_BT(root, result, 0);
 }
 
+int max_sum_leaf_to_root_in_BT(const Node_BinaryTree* root, vector<const Node_BinaryTree*>& maxPath)
+{
+    if (root == NULL)
+    {
+        return 0;
+    }
+
+    vector<const Node_BinaryTree*> leftMaxPath;
+    int leftMaxSum = max_sum_leaf_to_root_in_BT(root->leftNode, leftMaxPath);
+
+    vector<const Node_BinaryTree*> rightMaxPath;
+    int rightMaxSum = max_sum_leaf_to_root_in_BT(root->rightNode, rightMaxPath);
+
+    if (leftMaxSum > rightMaxSum)
+    {
+        leftMaxPath.emplace_back(root);
+        maxPath = std::move(leftMaxPath);
+        return leftMaxSum + root->value;
+    }
+
+    rightMaxPath.emplace_back(root);
+    maxPath = std::move(rightMaxPath);
+    return rightMaxSum + root->value;
+}
+
+int max_sum_leaf_to_root_in_BT(const Node_BinaryTree* root)
+{
+    vector<const Node_BinaryTree*> maxPath;
+
+    int max = max_sum_leaf_to_root_in_BT(root, maxPath);
+
+    for (int i = 0; i < maxPath.size(); ++i)
+    {
+        cout << maxPath[i]->value << " ";
+    }
+    cout << endl;
+
+    return max;
+}
+
 // int main()
 int iterative_traversal_BT()
 {
@@ -953,6 +993,35 @@ int vertical_sum_BT()
     {
         cout << "Sum " << it->first << " = " << it->second << endl;
     }
+
+    int test;
+    cin >> test;
+
+    return 0;
+}
+
+// int main()
+int max_sum_leaf_to_root_in_BT()
+{
+    Node_BinaryTree* n1 = new Node_BinaryTree();
+    Node_BinaryTree* n2 = new Node_BinaryTree();
+    Node_BinaryTree* n3 = new Node_BinaryTree();
+    Node_BinaryTree* n4 = new Node_BinaryTree();
+    Node_BinaryTree* n5 = new Node_BinaryTree();
+
+    n1->value = 10;
+    n2->value = -2;
+    n3->value = 7;
+    n4->value = 8;
+    n5->value = -4;
+
+    n1->leftNode = n2;
+    n1->rightNode = n3;
+
+    n2->leftNode = n4;
+    n2->rightNode = n5;
+
+    cout << max_sum_leaf_to_root_in_BT(n1) << endl;
 
     int test;
     cin >> test;
