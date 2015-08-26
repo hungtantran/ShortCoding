@@ -461,6 +461,81 @@ int max_sum_leaf_to_root_in_BT(const Node_BinaryTree* root)
     return max;
 }
 
+void connect_node_same_level(Node_BinaryTree* root)
+{
+    if (root == NULL)
+    {
+        return;
+    }
+
+    queue<Node_BinaryTree*> queue1, queue2;
+    queue1.push(root);
+
+    while (true)
+    {
+        while (!queue1.empty())
+        {
+            Node_BinaryTree* curNode = queue1.front();
+            queue1.pop();
+
+            if (!queue1.empty())
+            {
+                curNode->nextNode = queue1.front();
+            }
+
+            if (curNode->leftNode != NULL)
+            {
+                queue2.push(curNode->leftNode);
+            }
+
+            if (curNode->rightNode != NULL)
+            {
+                queue2.push(curNode->rightNode);
+            }
+        }
+
+        if (queue2.empty())
+        {
+            break;
+        }
+        else
+        {
+            queue1 = std::move(queue2);
+        }
+    }
+}
+
+int largest_independent_set(const Node_BinaryTree* root)
+{
+    if (root == NULL)
+    {
+        return 0;
+    }
+
+    int l1 = 0, l2 = 0, l3 = 0;
+    l1 = largest_independent_set(root->leftNode);
+
+    if (root->leftNode != NULL)
+    {
+        l2 = largest_independent_set(root->leftNode->leftNode);
+        l3 = largest_independent_set(root->leftNode->rightNode);
+    }
+
+    int r1 = 0, r2 = 0, r3 = 0;
+    r1 = largest_independent_set(root->rightNode);
+
+    if (root->rightNode != NULL)
+    {
+        r2 = largest_independent_set(root->rightNode->leftNode);
+        r3 = largest_independent_set(root->rightNode->rightNode);
+    }
+
+    int max1 = l1 + r1;
+    int max2 = 1 + l2 + l3 + r2 + r3;
+
+    return max1 > max2 ? max1 : max2;
+}
+
 // int main()
 int iterative_traversal_BT()
 {
@@ -1022,6 +1097,83 @@ int max_sum_leaf_to_root_in_BT()
     n2->rightNode = n5;
 
     cout << max_sum_leaf_to_root_in_BT(n1) << endl;
+
+    int test;
+    cin >> test;
+
+    return 0;
+}
+
+// int main()
+int connect_node_same_level()
+{
+    Node_BinaryTree* n1 = new Node_BinaryTree();
+    Node_BinaryTree* n2 = new Node_BinaryTree();
+    Node_BinaryTree* n3 = new Node_BinaryTree();
+    Node_BinaryTree* n4 = new Node_BinaryTree();
+    Node_BinaryTree* n5 = new Node_BinaryTree();
+    Node_BinaryTree* n6 = new Node_BinaryTree();
+
+    n1->value = 1;
+    n2->value = 2;
+    n3->value = 3;
+    n4->value = 4;
+    n5->value = 5;
+    n6->value = 6;
+
+    n1->leftNode = n2;
+    n1->rightNode = n3;
+
+    n2->leftNode = n4;
+    n2->rightNode = n5;
+
+    n3->rightNode = n6;
+
+    n1->Print();
+    cout << endl << endl;
+
+    connect_node_same_level(n1);
+    n1->Print();
+
+    int test;
+    cin >> test;
+
+    return 0;
+}
+
+// int main()
+int largest_independent_set()
+{
+    Node_BinaryTree* n1 = new Node_BinaryTree();
+    Node_BinaryTree* n2 = new Node_BinaryTree();
+    Node_BinaryTree* n3 = new Node_BinaryTree();
+    Node_BinaryTree* n4 = new Node_BinaryTree();
+    Node_BinaryTree* n5 = new Node_BinaryTree();
+    Node_BinaryTree* n6 = new Node_BinaryTree();
+    Node_BinaryTree* n7 = new Node_BinaryTree();
+    Node_BinaryTree* n8 = new Node_BinaryTree();
+
+    n1->value = 1;
+    n2->value = 2;
+    n3->value = 3;
+    n4->value = 4;
+    n5->value = 5;
+    n6->value = 6;
+    n7->value = 7;
+    n8->value = 8;
+
+    n1->leftNode = n2;
+    n1->rightNode = n3;
+
+    n2->leftNode = n4;
+    n2->rightNode = n5;
+
+    n3->rightNode = n6;
+
+    n5->leftNode = n7;
+    n5->rightNode = n8;
+
+    cout << largest_independent_set(n1) << endl;
 
     int test;
     cin >> test;
