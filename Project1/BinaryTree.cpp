@@ -4,6 +4,7 @@
 #include <queue>
 #include <sstream>
 #include "HelperMethod.h"
+#include <map>
 
 using namespace std;
 
@@ -392,6 +393,32 @@ void populate_inorder_successor_all_node(Node_BinaryTree* root)
 {
     Node_BinaryTree* curNode = NULL;
     populate_inorder_successor_all_node(root, curNode);
+}
+
+void vertical_sum_BT(const Node_BinaryTree* root, map<int, int>& result, int distance)
+{
+    if (root == NULL)
+    {
+        return;
+    }
+
+    auto val = result.find(distance);
+    if (val == result.end())
+    {
+        result.insert(pair<int, int>(distance, root->value));
+    }
+    else
+    {
+        val->second = val->second + root->value;
+    }
+
+    vertical_sum_BT(root->leftNode, result, distance - 1);
+    vertical_sum_BT(root->rightNode, result, distance + 1);
+}
+
+void vertical_sum_BT(const Node_BinaryTree* root, map<int, int>& result)
+{
+    vertical_sum_BT(root, result, 0);
 }
 
 // int main()
@@ -884,6 +911,48 @@ int populate_inorder_successor_all_node()
     populate_inorder_successor_all_node(n1);
     n1->Print();
     cout << endl << endl;
+
+    int test;
+    cin >> test;
+
+    return 0;
+}
+
+// int main()
+int vertical_sum_BT()
+{
+    Node_BinaryTree* n1 = new Node_BinaryTree();
+    Node_BinaryTree* n2 = new Node_BinaryTree();
+    Node_BinaryTree* n3 = new Node_BinaryTree();
+    Node_BinaryTree* n4 = new Node_BinaryTree();
+    Node_BinaryTree* n5 = new Node_BinaryTree();
+    Node_BinaryTree* n6 = new Node_BinaryTree();
+    Node_BinaryTree* n7 = new Node_BinaryTree();
+
+    n1->value = 1;
+    n2->value = 2;
+    n3->value = 3;
+    n4->value = 4;
+    n5->value = 5;
+    n6->value = 6;
+    n7->value = 7;
+
+    n1->leftNode = n2;
+    n1->rightNode = n3;
+
+    n2->leftNode = n4;
+    n2->rightNode = n5;
+
+    n3->leftNode = n6;
+    n3->rightNode = n7;
+
+    map<int, int> result;
+    vertical_sum_BT(n1, result);
+
+    for (auto it = result.begin(); it != result.end(); ++it)
+    {
+        cout << "Sum " << it->first << " = " << it->second << endl;
+    }
 
     int test;
     cin >> test;
