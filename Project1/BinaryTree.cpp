@@ -536,6 +536,114 @@ int largest_independent_set(const Node_BinaryTree* root)
     return max1 > max2 ? max1 : max2;
 }
 
+void reverse_level_order_traversal(const Node_BinaryTree* root)
+{
+	if (root == NULL)
+	{
+		return;
+	}
+
+	queue<const Node_BinaryTree*> traversal1, traversal2;
+	stack<const Node_BinaryTree*> reverseTraversal1, reverseTraversal2;
+
+	traversal1.emplace(root);
+
+	while (true)
+	{
+		while (!traversal1.empty())
+		{
+			const Node_BinaryTree* curNode = traversal1.front();
+			traversal1.pop();
+
+			reverseTraversal2.push(curNode);
+
+			if (curNode->leftNode != NULL)
+			{
+				traversal2.push(curNode->leftNode);
+			}
+			
+			if (curNode->rightNode != NULL)
+			{
+				traversal2.push(curNode->rightNode);
+			}
+		}
+
+		while (!reverseTraversal2.empty())
+		{
+			const Node_BinaryTree* curNode = reverseTraversal2.top();
+			reverseTraversal1.push(curNode);
+			reverseTraversal2.pop();
+		}
+
+		if (traversal2.empty())
+		{
+			break;
+		}
+		else
+		{
+			traversal1 = std::move(traversal2);
+		}
+	}
+
+	while (!reverseTraversal1.empty())
+	{
+		const Node_BinaryTree* curNode = reverseTraversal1.top();
+		reverseTraversal1.pop();
+		cout << curNode->value << " ";
+	}
+}
+
+Node_BinaryTree* construct_complete_BT_from_linked_list(const Node_LinkedList* head)
+{
+	if (head == NULL)
+	{
+		return NULL;
+	}
+
+	queue<Node_BinaryTree*> curLevel, nextLevel;
+	Node_BinaryTree* root = new Node_BinaryTree();
+	root->value = head->value;
+	curLevel.push(root);
+
+	head = head->nextNode;
+
+	bool left = true;
+	while (head != NULL)
+	{
+		while (!curLevel.empty())
+		{
+			if (head == NULL)
+			{
+				break;
+			}
+
+			Node_BinaryTree* curNode = curLevel.front();
+
+			Node_BinaryTree* nextNode = new Node_BinaryTree();
+			nextNode->value = head->value;
+			nextLevel.push(nextNode);
+
+			if (left)
+			{
+				curNode->leftNode = nextNode;
+				left = false;
+			}
+			else
+			{
+				curNode->rightNode = nextNode;
+				curLevel.pop();
+				left = true;
+			}
+
+			head = head->nextNode;
+		}
+
+		curLevel = std::move(nextLevel);
+	}
+
+	return root;
+}
+
 // int main()
 int iterative_traversal_BT()
 {
@@ -1179,4 +1287,79 @@ int largest_independent_set()
     cin >> test;
 
     return 0;
+}
+
+// int main()
+int reverse_level_order_traversal()
+{
+	Node_BinaryTree* n1 = new Node_BinaryTree();
+	Node_BinaryTree* n2 = new Node_BinaryTree();
+	Node_BinaryTree* n3 = new Node_BinaryTree();
+	Node_BinaryTree* n4 = new Node_BinaryTree();
+	Node_BinaryTree* n5 = new Node_BinaryTree();
+	Node_BinaryTree* n6 = new Node_BinaryTree();
+	Node_BinaryTree* n7 = new Node_BinaryTree();
+	Node_BinaryTree* n8 = new Node_BinaryTree();
+
+	n1->value = 1;
+	n2->value = 2;
+	n3->value = 3;
+	n4->value = 4;
+	n5->value = 5;
+	n6->value = 6;
+	n7->value = 7;
+	n8->value = 8;
+
+	n1->leftNode = n2;
+	n1->rightNode = n3;
+
+	n2->leftNode = n4;
+	n2->rightNode = n5;
+
+	n3->rightNode = n6;
+
+	n5->leftNode = n7;
+	n5->rightNode = n8;
+
+	n1->Print();
+	cout << endl << endl;
+
+	reverse_level_order_traversal(n1);
+
+	int test;
+	cin >> test;
+
+	return 0;
+}
+
+// int main()
+int construct_complete_BT_from_linked_list()
+{
+	Node_LinkedList* n1 = new Node_LinkedList();
+	Node_LinkedList* n2 = new Node_LinkedList();
+	Node_LinkedList* n3 = new Node_LinkedList();
+	Node_LinkedList* n4 = new Node_LinkedList();
+	Node_LinkedList* n5 = new Node_LinkedList();
+	Node_LinkedList* n6 = new Node_LinkedList();
+
+	n1->nextNode = n2;
+	n2->nextNode = n3;
+	n3->nextNode = n4;
+	n4->nextNode = n5;
+	n5->nextNode = n6;
+
+	n1->value = 10;
+	n2->value = 12;
+	n3->value = 15;
+	n4->value = 25;
+	n5->value = 30;
+	n6->value = 36;
+
+	Node_BinaryTree* root = construct_complete_BT_from_linked_list(n1);
+	root->Print();
+
+	int test;
+	cin >> test;
+
+	return 0;
 }
