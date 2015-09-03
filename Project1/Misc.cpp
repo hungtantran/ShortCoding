@@ -347,6 +347,48 @@ int evaluate_simple_expression(const string& exp)
     return vals.top();
 }
 
+int maximum_sum_path_matrix(const vector<vector<int>>& matrix, map<pair<int, int>, int>& sum, int x, int y)
+{
+	if (y >= matrix.size())
+	{
+		return 0;
+	}
+
+	if (x >= matrix[0].size())
+	{
+		return 0;
+	}
+
+	if (sum.find(pair<int, int>(x, y)) != sum.end())
+	{
+		return sum.at(pair<int, int>(x, y));
+	}
+
+	int maxSumRight = maximum_sum_path_matrix(matrix, sum, x + 1, y);
+	int maxSumDown = maximum_sum_path_matrix(matrix, sum, x, y + 1);
+	int maxSum = 0;
+	if (maxSumRight > maxSumDown)
+	{
+		cout << "Go down" << endl;
+		maxSum = maxSumRight;
+	}
+	else
+	{
+		cout << "Go right" << endl;
+		maxSum = maxSumDown;
+	}
+
+	sum[pair<int, int>(x, y)] = maxSum + matrix[x][y];
+
+	return maxSum + matrix[x][y];
+}
+
+int maximum_sum_path_matrix(const vector<vector<int>>& matrix)
+{
+	map<pair<int, int>, int> sum;
+	return maximum_sum_path_matrix(matrix, sum, 0, 0);
+}
+
 // http://www.geeksforgeeks.org/find-index-0-replaced-1-get-longest-continuous-sequence-1s-binary-array/
 // int main()
 int longest_1_sequence()
@@ -514,5 +556,22 @@ int evaluate_simple_expression()
     cin >> test;
 
     return 0;
+}
+
+// http://www.geeksforgeeks.org/amazon-interview-experience-set-226-on-campus/
+int main()
+// int maximum_sum_path_matrix()
+{
+	vector<vector<int>> matrix;
+	HelperMethod::generateMatrix(matrix, 5, 5, 1, 5);
+	HelperMethod::printMatrix(matrix);
+
+	cout << endl;
+	cout << maximum_sum_path_matrix(matrix) << endl;
+
+	int test;
+	cin >> test;
+
+	return 0;
 }
 

@@ -114,12 +114,31 @@ void HelperMethod::printArray(const vector<int>& arr)
 
 void HelperMethod::generateArray(vector<int>& arr, int size, int min, int max)
 {
-    srand(time(NULL));
-
 	for (int i = 0; i < size; ++i)
 	{
 		int val = rand() % (max - min + 1) + min;
 		arr.emplace_back(val);
+	}
+};
+
+void HelperMethod::generateMatrix(std::vector<std::vector<int>>& matrix, int width, int height, int min, int max)
+{
+	srand(time(NULL));
+
+	for (int i = 0; i < height; ++i)
+	{
+		vector<int> row;
+		HelperMethod::generateArray(row, width, min, max);
+		matrix.emplace_back(row);
+	}
+}
+
+void HelperMethod::printMatrix(const std::vector<std::vector<int>>& matrix)
+{
+	for (int i = 0; i < matrix.size(); ++i)
+	{
+		HelperMethod::printArray(matrix[i]);
+		cout << endl;
 	}
 }
 

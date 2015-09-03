@@ -70,7 +70,11 @@ class HelperMethod
 public:
 	static void printArray(const std::vector<int>& arr);
 
+	static void printMatrix(const std::vector<std::vector<int>>& matrix);
+
 	static void generateArray(std::vector<int>& arr, int size, int min, int max);
+
+	static void generateMatrix(std::vector<std::vector<int>>& matrix, int width, int height, int min, int max);
 
     static Node_BinaryTree* generateBinaryTree(bool balance = false, int maxdepth = 10);
 
