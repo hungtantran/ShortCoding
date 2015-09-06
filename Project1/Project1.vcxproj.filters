@@ -150,5 +150,8 @@
     <ClCompile Include="Search_And_Sort.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Greedy_Algorithms.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
