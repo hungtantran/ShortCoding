@@ -98,6 +98,8 @@ bool find_if_subsequence(const string& str1, const string& str2)
 	return find_if_subsequence(str1, str2, 0, 0);
 }
 
+// Recursive version
+/*
 int snake_ladder(const vector<int>& moves, int index, set<int>& steps, map<int, int>& cost)
 {
 	if (index >= moves.size() - 1)
@@ -155,6 +157,101 @@ int snake_ladder(const vector<int>& moves)
 	set<int> steps;
 	map<int, int> cost;
 	return snake_ladder(moves, 0, steps, cost);
+}
+*/
+
+// Dijkstra version
+int snake_ladder(const vector<int>& moves)
+{
+    int size = moves.size();
+
+    vector<vector<int>> paths;
+    paths.resize(size);
+    for (int i = 0; i < size; ++i)
+    {
+        paths[i].resize(size, 0);
+    }
+
+    for (int i = 0; i < size; ++i)
+    {
+        for (int j = i + 1; j <= i + 6; ++j)
+        {
+            if (j >= 30)
+            {
+                break;
+            }
+
+            if (moves[j] != -1)
+            {
+                paths[i][moves[j]] = 1;
+            }
+            else
+            {
+                paths[i][j] = 1;
+            }
+        }
+    }
+
+    vector<bool> steps(size, false);
+    vector<int> shortest(size, INT_MAX);
+    shortest[0] = 0;
+
+    for (int i = 0; i < size; ++i)
+    {
+        int minIndex = -1;
+        int minDist = INT_MAX;
+        for (int j = 0; j < size; ++j)
+        {
+            if (steps[j] == false && shortest[j] < minDist)
+            {
+                minIndex = j;
+                minDist = shortest[j];
+            }
+        }
+
+        if (minIndex == -1)
+        {
+            break;
+        }
+
+        steps[minIndex] = true;
+        for (int j = 0; j < size; ++j)
+        {
+            if (paths[minIndex][j] > 0 && steps[j] == false && minDist + paths[minIndex][j] < shortest[j])
+            {
+                shortest[j] = minDist + paths[minIndex][j];
+            }
+        }
+    }
+
+    int cost = shortest[29];
+    stack<int> shortestSteps;
+    shortestSteps.push(29);
+    int curIndex = 29;
+
+    while (cost > 0)
+    {
+        for (int i = 0; i < size; ++i)
+        {
+            if (paths[i][curIndex] > 0 && shortest[i] + paths[i][curIndex] == cost)
+            {
+                cost -= paths[i][curIndex];
+                curIndex = i;
+                shortestSteps.push(curIndex);
+                break;
+            }
+        }
+    }
+
+    cout << "Steps are: " << endl;
+    while (!shortestSteps.empty())
+    {
+        cout << shortestSteps.top() << " ";
+        shortestSteps.pop();
+    }
+    cout << endl;
+
+    return shortest[29];
 }
 
 void generate_binary_representation_ones_greater_than_zeroes(int length, vector<int>& vals, int numOnes, int numZeroes)
