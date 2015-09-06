@@ -559,8 +559,8 @@ int evaluate_simple_expression()
 }
 
 // http://www.geeksforgeeks.org/amazon-interview-experience-set-226-on-campus/
-int main()
-// int maximum_sum_path_matrix()
+// int main()
+int maximum_sum_path_matrix()
 {
 	vector<vector<int>> matrix;
 	HelperMethod::generateMatrix(matrix, 5, 5, 1, 5);

@@ -97,6 +97,7 @@
     <ClCompile Include="Recursion_DP_Cracking_CI.cpp" />
     <ClCompile Include="Reverse_Linkedlist.cpp" />
     <ClCompile Include="Rotation_Point.cpp" />
+    <ClCompile Include="Search_And_Sort.cpp" />
     <ClCompile Include="Shortest_chain_to_reach_target_word.cpp" />
     <ClCompile Include="Shuffle_Array.cpp" />
     <ClCompile Include="Overlap_Rectangle.cpp" />

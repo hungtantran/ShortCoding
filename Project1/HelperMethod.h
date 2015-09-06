@@ -68,6 +68,10 @@ struct Node_LinkedList {
 class HelperMethod
 {
 public:
+    static int binarySearch(const std::vector<int>& sortedArr, int elem);
+
+    static int quickSearch(const std::vector<int>& arr, int k);
+
 	static void printArray(const std::vector<int>& arr);
 
 	static void printMatrix(const std::vector<std::vector<int>>& matrix);
@@ -104,4 +108,13 @@ public:
     static int RightHeap(int index);
 
     static int ParentHeap(int index);
+
+    // Sorted related methods
+    static void mergeSort(std::vector<int>& arr);
+
+    static void mergeSort(std::vector<int>& arr, int low, int high);
+
+    static void quickSort(std::vector<int>& arr);
+
+    static void quickSort(std::vector<int>& arr, int low, int high);
 };

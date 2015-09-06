@@ -8,6 +8,77 @@
 
 using namespace std;
 
+int HelperMethod::binarySearch(const std::vector<int>& sortedArr, int elem)
+{
+    int low = 0;
+    int high = sortedArr.size() - 1;
+
+    while (low <= high)
+    {
+        int mid = low + (high - low) / 2;
+
+        if (sortedArr[mid] == elem)
+        {
+            return mid;
+        }
+        else if (sortedArr[mid] > elem)
+        {
+            high = mid - 1;
+        }
+        else
+        {
+            low = mid + 1;
+        }
+    }
+
+    return -1;
+}
+
+int HelperMethod::quickSearch(const std::vector<int>& arr, int k)
+{
+    std::vector<int> tmpArr(arr);
+    int low = 0;
+    int high = tmpArr.size() - 1;
+    int result = -1;
+
+    while (low <= high)
+    {
+        int index = low - 1;
+        int pivot = tmpArr[high];
+
+        for (int m = low; m < high; ++m)
+        {
+            if (pivot >= tmpArr[m])
+            {
+                ++index;
+                int tmp = tmpArr[index];
+                tmpArr[index] = tmpArr[m];
+                tmpArr[m] = tmp;
+            }
+        }
+
+        ++index;
+        int tmp = tmpArr[index];
+        tmpArr[index] = pivot;
+        tmpArr[high] = tmp;
+
+        if (index + 1 == k)
+        {
+            return tmpArr[index];
+        }
+        else if (index + 1 > k)
+        {
+            high = index - 1;
+        }
+        else
+        {
+            low = index + 1;
+        }
+    }
+
+    return result;
+}
+
 int HelperMethod::LeftHeap(int index) {
     return index * 2 + 1;
 }
@@ -383,4 +454,186 @@ void Node_BinaryTree::ToSortedArray(vector<int>& result)
     this->leftNode->ToSortedArray(result);
     result.emplace_back(this->value);
     this->rightNode->ToSortedArray(result);
+}
+
+void HelperMethod::mergeSort(std::vector<int>& arr)
+{
+    HelperMethod::mergeSort(arr, 0, arr.size() - 1);
+}
+
+void HelperMethod::mergeSort(std::vector<int>& arr, int low, int high)
+{
+    if (low >= high)
+    {
+        return;
+    }
+
+    HelperMethod::mergeSort(arr, low, (low + high) / 2);
+    HelperMethod::mergeSort(arr, (low + high) / 2 + 1, high);
+
+    int leftSize = (high - low) / 2 + 1;
+    vector<int> tmpLeft(leftSize, 0);
+    for (int i = 0; i < leftSize; ++i)
+    {
+        tmpLeft[i] = arr[low + i];
+    }
+
+    int rightSize = (high - low) + 1 - leftSize;
+    vector<int> tmpRight(rightSize, 0);
+    for (int i = 0; i < rightSize; ++i)
+    {
+        tmpRight[i] = arr[low + leftSize + i];
+    }
+
+    int indexLeft = 0;
+    int indexRight = 0;
+    while (true)
+    {
+        if (indexLeft >= tmpLeft.size() && indexRight >= tmpRight.size())
+        {
+            break;
+        }
+
+        if (indexLeft >= tmpLeft.size() && indexRight < tmpRight.size())
+        {
+            arr[low + indexLeft + indexRight] = tmpRight[indexRight];
+            ++indexRight;
+            continue;
+        }
+
+        if (indexLeft < tmpLeft.size() && indexRight >= tmpRight.size())
+        {
+            arr[low + indexLeft + indexRight] = tmpLeft[indexLeft];
+            ++indexLeft;
+            continue;
+        }
+
+        if (tmpLeft[indexLeft] > tmpRight[indexRight])
+        {
+            arr[low + indexLeft + indexRight] = tmpRight[indexRight];
+            ++indexRight;
+        }
+        else
+        {
+            arr[low + indexLeft + indexRight] = tmpLeft[indexLeft];
+            ++indexLeft;
+        }
+    }
+}
+
+void HelperMethod::quickSort(std::vector<int>& arr)
+{
+    HelperMethod::quickSort(arr, 0, arr.size() - 1);
+}
+
+void HelperMethod::quickSort(std::vector<int>& arr, int low, int high)
+{
+    if (low >= high)
+    {
+        return;
+    }
+
+    int index = low - 1;
+    int pivot = arr[high];
+    for (int i = low; i <= high; ++i)
+    {
+        if (pivot >= arr[i])
+        {
+            ++index;
+            int tmp = arr[index];
+            arr[index] = arr[i];
+            arr[i] = tmp;
+        }
+    }
+
+    HelperMethod::quickSort(arr, index + 1, high);
+    HelperMethod::quickSort(arr, low, index - 1);
+}
+
+// int main()
+int test_binarySearch()
+{
+    vector<int> sortedArray = { 1, 4, 6, 10, 15 };
+    cout << HelperMethod::binarySearch(sortedArray, 1) << endl;
+    cout << HelperMethod::binarySearch(sortedArray, 4) << endl;
+    cout << HelperMethod::binarySearch(sortedArray, 6) << endl;
+    cout << HelperMethod::binarySearch(sortedArray, 10) << endl;
+    cout << HelperMethod::binarySearch(sortedArray, 15) << endl;
+    cout << HelperMethod::binarySearch(sortedArray, 7) << endl;
+
+    vector<int> sortedArray2 = { 13 };
+    cout << HelperMethod::binarySearch(sortedArray2, 1) << endl;
+    cout << HelperMethod::binarySearch(sortedArray2, 13) << endl;
+
+    vector<int> sortedArray3 = { };
+    cout << HelperMethod::binarySearch(sortedArray3, 1) << endl;
+
+
+    int test;
+    cin >> test;
+
+    return 0;
+}
+
+// int main()
+int test_quickSearch()
+{
+    vector<int> arr = { 6, 4, 1, 15, 10 };
+    cout << HelperMethod::quickSearch(arr, 1) << endl;
+    cout << HelperMethod::quickSearch(arr, 2) << endl;
+    cout << HelperMethod::quickSearch(arr, 3) << endl;
+    cout << HelperMethod::quickSearch(arr, 4) << endl;
+    cout << HelperMethod::quickSearch(arr, 5) << endl;
+    cout << HelperMethod::quickSearch(arr, 6) << endl;
+
+    vector<int> arr2 = { 13 };
+    cout << HelperMethod::quickSearch(arr2, 1) << endl;
+    cout << HelperMethod::quickSearch(arr2, 2) << endl;
+
+    vector<int> arr3 = {};
+    cout << HelperMethod::quickSearch(arr3, 1) << endl;
+
+    int test;
+    cin >> test;
+
+    return 0;
+}
+
+// int main()
+int test_sort()
+{
+    // Test merge sort
+    vector<int> arr = { 6, 4, 1, 15, 10 };
+    HelperMethod::mergeSort(arr);
+    HelperMethod::printArray(arr);
+
+    vector<int> arr2 = { 13 };
+    HelperMethod::mergeSort(arr2);
+    HelperMethod::printArray(arr2);
+
+    vector<int> arr3 = {};
+    HelperMethod::mergeSort(arr3);
+    HelperMethod::printArray(arr3);
+
+    cout << endl;
+
+    // Test quick sort
+    vector<int> arr4 = { 6, 4, 1, 15, 10 };
+    HelperMethod::quickSort(arr4);
+    HelperMethod::printArray(arr4);
+
+    vector<int> arr5 = { 13 };
+    HelperMethod::quickSort(arr5);
+    HelperMethod::printArray(arr5);
+
+    vector<int> arr6 = {};
+    HelperMethod::quickSort(arr6);
+    HelperMethod::printArray(arr6);
+
+    cout << endl;
+
+    int test;
+    cin >> test;
+
+    return 0;
 }
