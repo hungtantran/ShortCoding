@@ -69,6 +69,7 @@
     <ClCompile Include="BinarySearchTree.cpp" />
     <ClCompile Include="BinaryTree.cpp" />
     <ClCompile Include="Delete_Node.cpp" />
+    <ClCompile Include="DynamicProgramming.cpp" />
     <ClCompile Include="Find_Duplicates.cpp">
       <FunctionLevelLinking Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</FunctionLevelLinking>
     </ClCompile>
@@ -80,7 +81,6 @@
     <ClCompile Include="Inflight_Entertainment.cpp" />
     <ClCompile Include="LinkedList.cpp" />
     <ClCompile Include="LongestConsecutivePath.cpp" />
-    <ClCompile Include="Longest_Increasing_Sequence.cpp" />
     <ClCompile Include="Match_Parenthesis.cpp" />
     <ClCompile Include="Maximum_All_Subarray_Sizek.cpp" />
     <ClCompile Include="Misc.cpp" />
