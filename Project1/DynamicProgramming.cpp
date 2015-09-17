@@ -4,6 +4,12 @@
 
 using namespace std;
 
+struct pairVal
+{
+    int a;
+    int b;
+};
+
 int numCallsWithDP = 0;
 int numCallsWithoutDP = 0;
 
@@ -436,6 +442,277 @@ int longest_palindrome_subsequent(const string& str)
     return longest_palindrome_subsequent(str, 0, str.length() - 1, vals);
 }
 
+bool isPalindrome(const string& str, int start, int end)
+{
+    while (start < end)
+    {
+        if (str[start] != str[end])
+        {
+            return false;
+        }
+
+        ++start;
+        --end;
+    }
+
+    return true;
+}
+
+int palindrome_partitioning(const string& str, int startIndex)
+{
+    if (startIndex >= str.length())
+    {
+        return 0;
+    }
+
+    int minPartition = INT_MAX;
+    for (int i = startIndex; i < str.length(); ++i)
+    {
+        if (isPalindrome(str, startIndex, i))
+        {
+            int curMin = palindrome_partitioning(str, i + 1);
+            if (curMin < INT_MAX && curMin < minPartition)
+            {
+                minPartition = curMin;
+            }
+        }
+    }
+
+    return minPartition == INT_MAX ? INT_MAX : minPartition + 1;
+}
+
+int palindrome_partitioning(const string& str)
+{
+    return palindrome_partitioning(str, 0);
+}
+
+bool partition(const vector<int>& vals, int sum, int index, int& curSum)
+{
+    if (index >= vals.size())
+    {
+        return false;
+    }
+
+    if (vals[index] + curSum == sum)
+    {
+        return true;
+    }
+
+    curSum += vals[index];
+    bool found = partition(vals, sum, index + 1, curSum);
+    if (found)
+    {
+        return true;
+    }
+    curSum -= vals[index];
+
+    found = partition(vals, sum, index + 1, curSum);
+    if (found)
+    {
+        return true;
+    }
+
+    return false;
+}
+
+bool partition(const vector<int>& vals)
+{
+    int sum = 0;
+    for (int i = 0; i < vals.size(); ++i)
+    {
+        sum += vals[i];
+    }
+
+    if (sum % 2 == 1)
+    {
+        return false;
+    }
+
+    int curSum = 0;
+    return partition(vals, sum / 2, 0, curSum);
+}
+
+int largest_sum_continuous_subarray(const vector<int>& vals)
+{
+    int curMax = 0;
+    int maxStartIndex = -1;
+    int maxEndIndex = -1;
+    
+    int curSum = 0;
+    int curStartIndex = -1;
+    int curEndIndex = -1;
+
+    for (int i = 0; i < vals.size(); ++i)
+    {
+        curSum += vals[i];
+        if (curSum < 0)
+        {
+            curSum = 0;
+            curStartIndex = -1;
+            curEndIndex = -1;
+        }
+        else
+        {
+            if (curStartIndex == -1)
+            {
+                curStartIndex = i;
+            }
+
+            curEndIndex = i;
+
+            if (curSum > curMax)
+            {
+                maxStartIndex = curStartIndex;
+                maxEndIndex = curEndIndex;
+                curMax = curSum;
+            }
+        }
+    }
+
+    cout << "Start " << maxStartIndex << " End " << maxEndIndex << endl;
+
+    return curMax;
+}
+
+void quicksort(vector<pairVal>& pairs, int start, int end)
+{
+    if (start >= end)
+    {
+        return;
+    }
+
+    int low = start - 1;
+    int index = start;
+    pairVal pivot = pairs[end];
+
+    while (index <= end)
+    {
+        if (pairs[index].a <= pivot.a)
+        {
+            ++low;
+            pairVal tmp;
+            tmp.a = pairs[low].a;
+            tmp.b = pairs[low].b;
+            pairs[low].a = pairs[index].a;
+            pairs[low].b = pairs[index].b;
+            pairs[index].a = tmp.a;
+            pairs[index].b = tmp.b;
+        }
+
+        ++index;
+    }
+
+    quicksort(pairs, start, low - 1);
+    quicksort(pairs, low + 1, end);
+}
+
+int maximum_length_chain_of_pairs(vector<pairVal>& pairs)
+{
+    quicksort(pairs, 0, pairs.size() - 1);
+
+    int maxVal = 0;
+    vector<int> max(pairs.size(), 0);
+    for (int i = 0; i < pairs.size(); ++i)
+    {
+        int curMax = 0;
+
+        for (int j = 0; j < i; ++j)
+        {
+            if (pairs[i].a > pairs[j].b)
+            {
+                if (max[j] > curMax)
+                {
+                    curMax = max[j];
+                }
+            }
+        }
+
+        max[i] = curMax + 1;
+        if (max[i] > maxVal)
+        {
+            maxVal = max[i];
+        }
+    }
+
+    return maxVal;
+}
+
+int word_wrap(const vector<int>& lengths, int ideal, int startIndex, vector<int>& path, vector<vector<int>>& savedPath, vector<int>& costs)
+{
+    if (startIndex >= lengths.size())
+    {
+        return 0;
+    }
+
+    ++numCallsWithoutDP;
+
+    if (costs[startIndex] != -1)
+    {
+        for (int i = 0; i < savedPath[startIndex].size(); ++i)
+        {
+            path.emplace_back(savedPath[startIndex][i]);
+        }
+
+        return costs[startIndex];
+    }
+
+    ++numCallsWithDP;
+
+    int curLength = 0;
+    int minCost = INT_MAX;
+    int index = -1;
+
+    vector<int> minPath;
+    for (int i = startIndex; i < lengths.size(); ++i)
+    {
+        curLength += lengths[i];
+        if (curLength > ideal)
+        {
+            break;
+        }
+
+        int cost = ideal - curLength;
+        cost = cost * cost;
+
+        vector<int> curMinPath;
+        int nextCost = word_wrap(lengths, ideal, i + 1, curMinPath, savedPath, costs);
+        curMinPath.emplace_back(i);
+
+        cost += nextCost;
+
+        if (cost < minCost)
+        {
+            minCost = cost;
+            index = i;
+            minPath = curMinPath;
+        }
+    }
+
+    path = minPath;
+    costs[startIndex] = minCost;
+    savedPath[startIndex] = path;
+
+    return minCost;
+}
+
+void word_wrap(const vector<int>& lengths, int ideal)
+{
+    numCallsWithDP = 0;
+    numCallsWithoutDP = 0;
+
+    vector<int> paths;
+    vector<int> costs(lengths.size(), -1);
+    vector<vector<int>> savedPath(lengths.size());
+    cout << word_wrap(lengths, ideal, 0, paths, savedPath, costs) << endl;
+
+    int min = 1;
+    for (int i = paths.size() - 1; i >= 0; --i)
+    {
+        cout << "Line number " << (paths.size() - i) << ": From word no. " << min << " to " << (paths[i] + 1) << endl;
+        min = paths[i] + 2;
+    }
+}
+
 // http://www.geeksforgeeks.org/dynamic-programming-set-3-longest-increasing-subsequence/
 // int main()
 int Longest_Increasing_Sequence()
@@ -604,6 +881,79 @@ int longest_palindrome_subsequent()
 
     string str2 = "GEEKS FOR GEEKS";
     cout << longest_palindrome_subsequent(str2) << endl;
+
+    int test;
+    cin >> test;
+
+    return 0;
+}
+
+// TODO: make this DP
+// http://www.geeksforgeeks.org/dynamic-programming-set-17-palindrome-partitioning/
+// int main()
+int palindrome_partitioning()
+{
+    std::string str = "ababbbabbababa";
+    cout << palindrome_partitioning(str) << endl;
+
+    int test;
+    cin >> test;
+
+    return 0;
+}
+
+// TODO; make this DP
+// http://www.geeksforgeeks.org/dynamic-programming-set-18-partition-problem/
+// int main()
+int partition()
+{
+    vector<int> vals = { 1, 5, 11, 5 };
+    cout << partition(vals) << endl;
+
+    vector<int> vals2 = { 1, 5, 3 };
+    cout << partition(vals2) << endl;
+
+    int test;
+    cin >> test;
+
+    return 0;
+}
+
+// http://www.geeksforgeeks.org/largest-sum-contiguous-subarray/
+// int main()
+int largest_sum_continuous_subarray()
+{
+    vector<int> vals = { -2, -3, 4, -1, -2, 1, 5, -3 };
+    cout << largest_sum_continuous_subarray(vals) << endl;
+
+    int test;
+    cin >> test;
+
+    return 0;
+}
+
+// http://www.geeksforgeeks.org/dynamic-programming-set-20-maximum-length-chain-of-pairs/
+// int main()
+int maximum_length_chain_of_pairs()
+{
+    vector<pairVal> pairs = { { 5, 24 }, { 15, 25 }, { 27, 40 }, { 50, 60 } };
+    cout << maximum_length_chain_of_pairs(pairs) << endl;
+
+    int test;
+    cin >> test;
+
+    return 0;
+}
+
+// http://www.geeksforgeeks.org/dynamic-programming-set-18-word-wrap/
+int main()
+//int word_wrap()
+{
+    vector<int> lengths = { 3, 2, 2, 5 };
+    word_wrap(lengths, 6);
+
+    cout << "numCallsWithDP: " << numCallsWithDP << endl;
+    cout << "numCallsWithoutDP: " << numCallsWithoutDP << endl;
 
     int test;
     cin >> test;
