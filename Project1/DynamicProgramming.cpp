@@ -946,8 +946,8 @@ int maximum_length_chain_of_pairs()
 }
 
 // http://www.geeksforgeeks.org/dynamic-programming-set-18-word-wrap/
-int main()
-//int word_wrap()
+// int main()
+int word_wrap()
 {
     vector<int> lengths = { 3, 2, 2, 5 };
     word_wrap(lengths, 6);
