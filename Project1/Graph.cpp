@@ -9,6 +9,37 @@
 
 using namespace std;
 
+struct NodeGraph
+{
+    int val;
+    vector<NodeGraph*> dst;
+
+    void Print()
+    {
+        queue<NodeGraph*> toPrint;
+        set<NodeGraph*> visited;
+        toPrint.push(this);
+        visited.insert(this);
+
+        while (!toPrint.empty())
+        {
+            NodeGraph* top = toPrint.front();
+            toPrint.pop();
+
+            cout << top->val << " ";
+            for (int i = 0; i < top->dst.size(); ++i)
+            {
+                if (visited.find(top->dst[i]) == visited.end())
+                {
+                    toPrint.push(top->dst[i]);
+                    visited.insert(top->dst[i]);
+                }
+            }
+        }
+        cout << endl;
+    }
+};
+
 struct Graph {
     int numVertices;
     vector<vector<int>> edges;
@@ -155,6 +186,41 @@ struct Graph2
     }
 };
 
+template<typename Type>
+Type add(Type a, Type b)
+{
+    return a + b;
+}
+
+void CopyGraph(NodeGraph*& copy, NodeGraph* node, map<NodeGraph*, NodeGraph*>& oldToNew)
+{
+    if (node == NULL)
+    {
+        if (copy != NULL)
+        {
+            delete copy;
+            copy = NULL;
+        }
+
+        return;
+    }
+
+    copy->val = node->val;
+    oldToNew.insert(std::make_pair(node, copy));
+    for (int i = 0; i < node->dst.size(); ++i)
+    {
+        if (oldToNew.find(node->dst[i]) == oldToNew.end())
+        {
+            copy->dst.emplace_back(new NodeGraph());
+            CopyGraph(copy->dst[i], node->dst[i], oldToNew);
+        }
+        else
+        {
+            copy->dst.emplace_back(oldToNew[node->dst[i]]);
+        }
+    }
+}
+
 //http://www.geeksforgeeks.org/detect-cycle-in-a-graph/
 // int main()
 int detect_cyle_in_graph()
@@ -189,8 +255,8 @@ int detect_cyle_in_graph()
 }
 
 //http://www.geeksforgeeks.org/breadth-first-traversal-for-a-graph/
-int main()
-//int BFS()
+//int main()
+int BFS()
 {
     Graph g(4);
     g.addEdge(0, 1);
@@ -202,6 +268,46 @@ int main()
 
     g.BFS(2);
     g.DFS(2);
+
+    int test;
+    cin >> test;
+
+    return 0;
+}
+
+int main()
+//int BFS2()
+{
+    NodeGraph* node1 = new NodeGraph();
+    node1->val = 1;
+
+    NodeGraph* node2 = new NodeGraph();
+    node2->val = 3;
+
+    NodeGraph* node3 = new NodeGraph();
+    node3->val = 2;
+
+    NodeGraph* node4 = new NodeGraph();
+    node4->val = 4;
+
+    NodeGraph* node5 = new NodeGraph();
+    node5->val = 5;
+
+    node1->dst.emplace_back(node2);
+    node1->dst.emplace_back(node3);
+    node2->dst.emplace_back(node4);
+    node3->dst.emplace_back(node5);
+    node2->dst.emplace_back(node1);
+
+    map<NodeGraph*, NodeGraph*> oldToNew;
+    NodeGraph* copy = new NodeGraph();
+    CopyGraph(copy, node1, oldToNew);
+
+    node1->Print();
+    cout << endl;
+    copy->Print();
+
+    cout << add<string>("con vit ", "con ngan") << endl;
 
     int test;
     cin >> test;
