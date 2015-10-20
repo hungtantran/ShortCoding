@@ -713,6 +713,49 @@ void word_wrap(const vector<int>& lengths, int ideal)
     }
 }
 
+void max_subarray(const vector<long long>& arr)
+{
+    long long maxNonCont = INT_MIN;
+    long long maxCont = INT_MIN;
+
+    long long curSum = 0;
+    long long max = INT_MIN;
+    for (long long i = 0; i < arr.size(); ++i)
+    {
+        max = max > arr[i] ? max : arr[i];
+
+        if (arr[i] > 0)
+        {
+            if (maxNonCont == INT_MIN)
+            {
+                maxNonCont = 0;
+            }
+
+            maxNonCont += arr[i];
+        }
+
+        curSum += arr[i];
+        if (curSum < 0)
+        {
+            curSum = 0;
+        }
+
+        maxCont = maxCont > curSum ? maxCont : curSum;
+    }
+
+    maxNonCont = maxNonCont == INT_MIN ? max : maxNonCont;
+
+    if (maxCont == 0)
+    {
+        if (max < 0)
+        {
+            maxCont = max;
+        }
+    }
+
+    cout << maxCont << " " << maxNonCont << endl;
+}
+
 // http://www.geeksforgeeks.org/dynamic-programming-set-3-longest-increasing-subsequence/
 // int main()
 int Longest_Increasing_Sequence()
@@ -957,6 +1000,33 @@ int word_wrap()
 
     int test;
     cin >> test;
+
+    return 0;
+}
+
+// https://www.hackerrank.com/challenges/maxsubarray
+// int main()
+int max_subarray()
+{
+    long long numTests = 0;
+    cin >> numTests;
+
+    for (long long i = 0; i < numTests; ++i)
+    {
+        long long numInput = 0;
+        cin >> numInput;
+
+        if (numInput > 0)
+        {
+            vector<long long> result(numInput, 0);
+            for (long long j = 0; j < numInput; ++j)
+            {
+                cin >> result[j];
+            }
+
+            max_subarray(result);
+        }
+    }
 
     return 0;
 }

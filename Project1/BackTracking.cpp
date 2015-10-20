@@ -161,6 +161,11 @@ bool subset_sum(const vector<int>& vals, vector<int>& subset, int index, int sum
 	return false;
 }
 
+void graphColoring(const vector<vector<int>>& graph, int numColor, vector<int>& colors)
+{
+
+}
+
 // http://www.geeksforgeeks.org/backtracking-set-1-the-knights-tour-problem/
 // int main()
 int knight_tour_main()
@@ -204,8 +209,8 @@ int rat_in_maze()
 }
 
 // http://www.geeksforgeeks.org/backttracking-set-4-subset-sum/
-int main()
-// int subset_sum()
+// int main()
+int subset_sum()
 {
 	const vector<int> vals = { 10, 7, 5, 18, 12, 20, 15 };
 	vector<int> subset;
@@ -234,4 +239,22 @@ int main()
 	cin >> test;
 
 	return 0;
+}
+
+// http://www.geeksforgeeks.org/backttracking-set-5-m-coloring-problem/
+// int main()
+int color_graph()
+{
+    vector<vector<int>> graph = 
+    {
+    { 0, 1, 1, 1 },
+    { 1, 0, 1, 0 },
+    { 1, 1, 0, 1 },
+    { 1, 0, 1, 0 },
+    };
+
+    vector<int> colors;
+    graphColoring(graph, 3, colors);
+
+    return 0;
 }
