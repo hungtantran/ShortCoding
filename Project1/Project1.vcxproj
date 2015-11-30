@@ -74,6 +74,7 @@
     <ClCompile Include="Find_Duplicates.cpp">
       <FunctionLevelLinking Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</FunctionLevelLinking>
     </ClCompile>
+    <ClCompile Include="GeneralAlgorithms.cpp" />
     <ClCompile Include="Graph.cpp" />
     <ClCompile Include="Greedy_Algorithms.cpp" />
     <ClCompile Include="Heap.cpp" />

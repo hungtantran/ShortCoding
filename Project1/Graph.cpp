@@ -9,6 +9,32 @@
 
 using namespace std;
 
+struct AdGraph
+{
+    struct AdList
+    {
+        int dest;
+        int weight;
+        AdList* next;
+    };
+
+    vector<AdList*> list;
+
+    AdGraph(int numV)
+    {
+        list.resize(numV, NULL);
+    }
+
+    void addEdge(int src, int dst, int weight)
+    {
+        AdList* list = new AdList();
+        list->dest = dst;
+        list->weight = weight;
+
+
+    }
+};
+
 struct NodeGraph
 {
     int val;
@@ -192,7 +218,7 @@ Type add(Type a, Type b)
     return a + b;
 }
 
-void CopyGraph(NodeGraph*& copy, NodeGraph* node, map<NodeGraph*, NodeGraph*>& oldToNew)
+/* void CopyGraph(NodeGraph*& copy, NodeGraph* node, map<NodeGraph*, NodeGraph*>& oldToNew)
 {
     if (node == NULL)
     {
@@ -219,6 +245,100 @@ void CopyGraph(NodeGraph*& copy, NodeGraph* node, map<NodeGraph*, NodeGraph*>& o
             copy->dst.emplace_back(oldToNew[node->dst[i]]);
         }
     }
+} */
+
+void merge_sort(vector<int>& arr)
+{
+    if (arr.size() <= 1)
+    {
+        return;
+    }
+
+    const int size = arr.size();
+    const int sizeLeft = size / 2;
+
+    vector<int> arrLeft(arr.begin(), arr.begin() + sizeLeft);
+    vector<int> arrRight(arr.begin() + sizeLeft, arr.begin() + size);
+
+    merge_sort(arrLeft);
+    merge_sort(arrRight);
+
+    int left = 0;
+    int right = 0;
+    while (left < arrLeft.size() || right < arrRight.size())
+    {
+        if (left == arrLeft.size())
+        {
+            arr[left + right] = arrRight[right];
+            ++right;
+        }
+        else if (right == arrRight.size())
+        {
+            arr[left + right] = arrLeft[left];
+            ++left;
+        }
+        else
+        {
+            if (arrLeft[left] < arrRight[right])
+            {
+                arr[left + right] = arrLeft[left];
+                ++left;
+            }
+            else
+            {
+                arr[left + right] = arrRight[right];
+                ++right;
+            }
+        }
+    }
+}
+
+void dijkstra(const vector<vector<int>>& graph, int src)
+{
+    vector<bool> visited(graph.size(), false);
+    visited[src] = true;
+
+    vector<int> distance(graph.size(), INT_MAX);
+    distance[src] = 0;
+
+    for (int i = 0; i < graph.size(); ++i)
+    {
+        if (graph[src][i] > 0)
+        {
+            distance[i] = graph[src][i];
+        }
+    }
+
+    while (true)
+    {
+        int minDist = INT_MAX;
+        int minIndex = -1;
+        for (int i = 0; i < distance.size(); ++i)
+        {
+            if (visited[i] == false && distance[i] < minDist && distance[i] > 0)
+            {
+                minDist = distance[i];
+                minIndex = i;
+            }
+        }
+
+        if (minIndex == -1)
+        {
+            break;
+        }
+
+        visited[minIndex] = true;
+
+        for (int i = 0; i < distance.size(); ++i)
+        {
+            if (graph[minIndex][i] > 0 && graph[minIndex][i] + distance[minIndex] < distance[i])
+            {
+                distance[i] = graph[minIndex][i] + distance[minIndex];
+            }
+        }
+    }
+
+    HelperMethod::printArray(distance);
 }
 
 //http://www.geeksforgeeks.org/detect-cycle-in-a-graph/
@@ -275,8 +395,8 @@ int BFS()
     return 0;
 }
 
-int main()
-//int BFS2()
+//int main()
+int BFS2()
 {
     NodeGraph* node1 = new NodeGraph();
     node1->val = 1;
@@ -301,13 +421,80 @@ int main()
 
     map<NodeGraph*, NodeGraph*> oldToNew;
     NodeGraph* copy = new NodeGraph();
-    CopyGraph(copy, node1, oldToNew);
+    //CopyGraph(copy, node1, oldToNew);
 
     node1->Print();
     cout << endl;
     copy->Print();
 
     cout << add<string>("con vit ", "con ngan") << endl;
+
+    int test;
+    cin >> test;
+
+    return 0;
+}
+
+//int main()
+int merge_sort()
+{
+    vector<int> arr;
+    HelperMethod::generateArray(arr, 10, 0, 1000);
+    HelperMethod::printArray(arr);
+
+    merge_sort(arr);
+    HelperMethod::printArray(arr);
+
+    int test;
+    cin >> test;
+
+    return 0;
+}
+
+// int main()
+int dijkstras1()
+{
+    vector<vector<int>> graph =
+    { { 0, 4, 0, 0, 0, 0, 0, 8, 0 },
+    { 4, 0, 8, 0, 0, 0, 0, 11, 0 },
+    { 0, 8, 0, 7, 0, 4, 0, 0, 2 },
+    { 0, 0, 7, 0, 9, 14, 0, 0, 0 },
+    { 0, 0, 0, 9, 0, 10, 0, 0, 0 },
+    { 0, 0, 4, 0, 10, 0, 2, 0, 0 },
+    { 0, 0, 0, 14, 0, 2, 0, 1, 6 },
+    { 8, 11, 0, 0, 0, 0, 1, 0, 7 },
+    { 0, 0, 2, 0, 0, 0, 6, 7, 0 }
+    };
+
+    dijkstra(graph, 0);
+
+    int test;
+    cin >> test;
+
+    return 0;
+}
+
+// int main()
+int dijkstras2()
+{
+    int V = 9;
+    struct AdGraph graph(V);
+    graph.addEdge(0, 1, 4);
+    graph.addEdge(0, 7, 8);
+    graph.addEdge(1, 2, 8);
+    graph.addEdge(1, 7, 11);
+    graph.addEdge(2, 3, 7);
+    graph.addEdge(2, 8, 2);
+    graph.addEdge(2, 5, 4);
+    graph.addEdge(3, 4, 9);
+    graph.addEdge(3, 5, 14);
+    graph.addEdge(4, 5, 10);
+    graph.addEdge(5, 6, 2);
+    graph.addEdge(6, 7, 1);
+    graph.addEdge(6, 8, 6);
+    graph.addEdge(7, 8, 7);
+
+    // dijkstras2(graph, 0);
 
     int test;
     cin >> test;
