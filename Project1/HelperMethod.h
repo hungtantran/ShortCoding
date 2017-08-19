@@ -72,13 +72,13 @@ public:
 
     static int quickSearch(const std::vector<int>& arr, int k);
 
-	static void printArray(const std::vector<int>& arr);
+    static void printArray(const std::vector<int>& arr);
 
-	static void printMatrix(const std::vector<std::vector<int>>& matrix);
+    static void printMatrix(const std::vector<std::vector<int>>& matrix);
 
-	static void generateArray(std::vector<int>& arr, int size, int min, int max);
+    static void generateArray(std::vector<int>& arr, int size, int min, int max);
 
-	static void generateMatrix(std::vector<std::vector<int>>& matrix, int width, int height, int min, int max);
+    static void generateMatrix(std::vector<std::vector<int>>& matrix, int width, int height, int min, int max);
 
     static Node_BinaryTree* generateBinaryTree(bool balance = false, int maxdepth = 10);
 
@@ -96,7 +96,7 @@ public:
     static void IncreaseKey(std::vector<int>& arr, int index, int newVal);
 
     static void InsertHeap(std::vector<int>& arr, int al);
-    
+
     static int RemoveLargestHeap(std::vector<int>& arr);
 
     static void HeapSort(std::vector<int>& arr);

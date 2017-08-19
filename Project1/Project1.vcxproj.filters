@@ -84,9 +84,6 @@
     <ClCompile Include="HelperMethod.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="HelperMethod.h">
-      <Filter>Header Files</Filter>
-    </ClCompile>
     <ClCompile Include="String_Permutation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -162,5 +159,22 @@
     <ClCompile Include="GeneralAlgorithms.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Euler_1.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Euler_2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Euler_3.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Euler_4.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="HelperMethod.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

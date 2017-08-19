@@ -10,8 +10,8 @@
 using namespace std;
 
 // https://www.hackerrank.com/challenges/sherlock-and-valid-string
-int main()
-// int valid_string()
+// int main()
+int valid_string()
 {
     string test;
     getline(cin, test);
