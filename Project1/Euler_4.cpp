@@ -22,8 +22,8 @@ bool isPalindrome(string num) {
     return true;
 }
 
-// int main() {
-int euler_4() {
+int main() {
+// int euler_4() {
     int maxI = INT_MIN, maxJ = INT_MIN, max = INT_MIN;
     for (int i = 999; i >= 100; i--) {
         for (int j = i; j >= 100; j--) {
