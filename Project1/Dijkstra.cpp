@@ -81,9 +81,29 @@ void dijkstra_2(const vector<vector<int>>& graph, int start_pos) {
     HelperMethod::printArray(distances);
 }
 
+// Third implementation
+void dijkstra_3(const vector<vector<pair<int, int>>>& graph, int start_pos) {
+    vector<bool> visited(graph.size(), false);
+    vector<int> distances(graph.size(), INT_MAX);
+    distances[start_pos] = 0;
+
+    for (int i = 0; i < graph.size(); ++i) {
+        int next_vertex = MinUnprocessedVertex(distances, visited);
+        visited[next_vertex] = true;
+        for (int j = 0; j < graph[next_vertex].size(); ++j) {
+            const pair<int, int> neighbor = graph[next_vertex][j];
+            if (!visited[neighbor.first] && distances[next_vertex] + neighbor.second < distances[neighbor.first]) {
+                distances[neighbor.first] = distances[next_vertex] + neighbor.second;
+            }
+        }
+    }
+
+    HelperMethod::printArray(distances);
+}
+
 int main() {
     /* Let us create the example graph discussed above */
-    std::vector<std::vector<int>> graph =
+    vector<vector<int>> graph =
     { { 0, 4, 0, 0, 0, 0, 0, 8, 0 },
     { 4, 0, 8, 0, 0, 0, 0, 11, 0 },
     { 0, 8, 0, 7, 0, 4, 0, 0, 2 },
@@ -96,6 +116,20 @@ int main() {
 
     dijkstra_1(graph, 0);
     dijkstra_2(graph, 0);
+
+    vector<vector<std::pair<int, int>>> graph_2 =
+    {
+        { { 1, 4 }, { 7, 8 } },
+        { { 0, 4 }, { 2, 8 }, { 7, 11 } },
+        { { 1, 8 }, { 3, 7 }, { 5, 4 }, { 8, 2 } },
+        { { 2, 7 }, { 4, 9 }, { 5, 14 } },
+        { { 3, 9 }, { 5, 10 } },
+        { { 2, 4 }, { 3, 14 }, { 4, 10 }, { 6, 2 } },
+        { { 5, 2 }, { 7, 1 }, { 8, 6 } },
+        { { 0, 8 }, { 1, 11 }, { 6, 1 }, { 8, 7 } },
+        { { 2, 2 }, { 6, 6 }, {7, 7} }
+    };
+    dijkstra_3(graph_2, 0);
 
     return 0;
 }
