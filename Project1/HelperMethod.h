@@ -74,6 +74,8 @@ public:
 
     static void printArray(const std::vector<int>& arr);
 
+    static void printMap(const std::map<int, int>& map);
+
     static void printMatrix(const std::vector<std::vector<int>>& matrix);
 
     static void generateArray(std::vector<int>& arr, int size, int min, int max);

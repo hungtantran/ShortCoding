@@ -171,6 +171,9 @@
     <ClCompile Include="Tranform_the_expression.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Reverse_Number.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HelperMethod.h">

@@ -3,6 +3,9 @@
 #include <iostream>
 #include <vector>
 #include <queue>
+#include <set>
+#include <map>
+
 #include "HelperMethod.h"
 
 using namespace std;
@@ -101,6 +104,133 @@ void dijkstra_3(const vector<vector<pair<int, int>>>& graph, int start_pos) {
     HelperMethod::printArray(distances);
 }
 
+// Fourth implementation
+// Be careful:
+// + struct contain const reference doesn't have default operator=
+// + Edge1 and NodeDistance1 should hold pointer to Node1 instead of reference or index
+struct Node1;
+
+struct Edge1 {
+    int weight;
+    Node1* source;
+    Node1* target;
+
+    Edge1(int weight, Node1* source, Node1* target)
+        : weight(weight), source(source), target(target) {}
+
+};
+
+struct Node1 {
+    int index;
+    std::vector<Edge1> edges;
+
+    Node1(int index) : index(index) {}
+};
+
+void addEdge(Node1* source, Node1* target, int weight, bool undirected=true) {
+    source->edges.emplace_back(Edge1(weight, source, target));
+    if (undirected) {
+        target->edges.emplace_back(Edge1(weight, target, source));
+    }
+}
+
+struct NodeDistance1 {
+    Node1* node;
+    int distance;
+    NodeDistance1(Node1* node, int distance)
+        : node(node), distance(distance) {}
+
+    struct Comapre {
+        bool operator() (const NodeDistance1& left, const NodeDistance1& right) {
+            return left.distance > right.distance;
+        }
+    };
+};
+
+void dijkstra_4(struct Node1& start) {
+    set<int> visited;
+    map<int, int> distances;
+    distances.emplace(start.index, 0);
+    priority_queue<NodeDistance1, std::vector<NodeDistance1>, NodeDistance1::Comapre> queue;
+    queue.emplace(NodeDistance1(&start, 0));
+
+    while (!queue.empty()) {
+        const NodeDistance1 next = queue.top();
+        queue.pop();
+        if (visited.find(next.node->index) != visited.end()) {
+            continue;
+        }
+        visited.insert(next.node->index);
+        distances.emplace(next.node->index, next.distance);
+        const vector<Edge1>& edges = next.node->edges;
+        for (int i = 0; i < edges.size(); ++i) {
+            if (visited.find(edges[i].target->index) == visited.end()) {
+                int distance = edges[i].weight + next.distance;
+                if (distances.find(edges[i].target->index) == distances.end() || distance < distances.at(edges[i].target->index)) {
+                    queue.emplace(NodeDistance1(edges[i].target, distance));
+                }
+            }
+        }
+    }
+
+    HelperMethod::printMap(distances);
+}
+
+// Fifth implementation
+pair<int, int> MinUnprocessedCell(const vector<vector<bool>>& visited, const vector<vector<int>>& distances) {
+    if (visited.size() == 0) {
+        return{ -1, -1 };
+    }
+    int min_distance = INT_MAX;
+    pair<int, int> min_cell = { -1, -1 };
+    for (int i = 0; i < visited.size(); ++i) {
+        for (int j = 0; j < visited[0].size(); ++j) {
+            if (!visited[i][j] && distances[i][j] != -1 && min_distance >= distances[i][j]) {
+                min_distance = distances[i][j];
+                min_cell = { i, j };
+            }
+        }
+    }
+    return min_cell;
+}
+
+void dijkstra_5(vector<vector<int>> matrix, pair<int, int> start) {
+    if (matrix.size() == 0) {
+        return;
+    }
+    vector<vector<bool>> visited(matrix.size(), vector<bool>(matrix[0].size(), false));
+    vector<vector<int>> distances(matrix.size(), vector<int>(matrix[0].size(), -1));
+    distances[start.first][start.second] = 0;
+
+    for (int i = 0; i < matrix.size() * matrix[0].size(); ++i) {
+        pair<int, int> next = MinUnprocessedCell(visited, distances);
+        if (next.first == -1 || next.second == -1) {
+            break;
+        }
+        visited[next.first][next.second] = true;
+        for (int m = -1; m <= 1; ++m) {
+            for (int n = -1; n <= 1; ++n) {
+                if (m == 0 && n == 0) {
+                    continue;
+                }
+                if (next.first + m < 0 || next.first + m >= matrix.size()) {
+                    continue;
+                }
+                if (next.second + n < 0 || next.second + n >= matrix[0].size()) {
+                    continue;
+                }
+                if (!visited[next.first + m][next.second + n] && matrix[next.first + m][next.second + n] != 0) {
+                    int distance = distances[next.first][next.second] + 1;
+                    if (distances[next.first + m][next.second + n] == -1 || distance < distances[next.first + m][next.second + n]) {
+                        distances[next.first + m][next.second + n] = distance;
+                    }
+                }
+            }
+        }
+    }
+    HelperMethod::printMatrix(distances);
+}
+
 int main() {
     /* Let us create the example graph discussed above */
     vector<vector<int>> graph =
@@ -130,6 +260,40 @@ int main() {
         { { 2, 2 }, { 6, 6 }, {7, 7} }
     };
     dijkstra_3(graph_2, 0);
+
+    Node1 node0(0);
+    Node1 node1(1);
+    Node1 node2(2);
+    Node1 node3(3);
+    Node1 node4(4);
+    Node1 node5(5);
+    Node1 node6(6);
+    Node1 node7(7);
+    Node1 node8(8);
+    addEdge(&node0, &node1, 4);
+    addEdge(&node0, &node7, 8);
+    addEdge(&node1, &node2, 8);
+    addEdge(&node7, &node1, 11);
+    addEdge(&node2, &node3, 7);
+    addEdge(&node2, &node5, 4);
+    addEdge(&node2, &node8, 2);
+    addEdge(&node3, &node4, 9);
+    addEdge(&node3, &node5, 14);
+    addEdge(&node4, &node5, 10);
+    addEdge(&node5, &node6, 2);
+    addEdge(&node6, &node7, 1);
+    addEdge(&node6, &node8, 6);
+    addEdge(&node7, &node8, 7);
+    dijkstra_4(node0);
+
+    vector<vector<int>> graph_3 =
+    {
+        { 1, 1, 0, 1, 1, 1, 1 },
+        { 1, 1, 0, 1, 0, 0, 1 },
+        { 1, 1, 0, 1, 0, 1, 1 },
+        { 1, 1, 1, 1, 0, 1, 1 }
+    };
+    dijkstra_5(graph_3, {1, 1});
 
     return 0;
 }

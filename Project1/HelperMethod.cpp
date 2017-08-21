@@ -3,6 +3,7 @@
 #include <iostream>
 #include <math.h>
 #include <stack>
+#include <map>
 
 #include "HelperMethod.h"
 
@@ -180,6 +181,13 @@ void HelperMethod::printArray(const vector<int>& arr)
         printf("%d ", arr[i]);
     }
 
+    printf("\n");
+}
+
+void HelperMethod::printMap(const std::map<int, int>& map) {
+    for (const auto& entry : map) {
+        printf("%d: %d\n", entry.first, entry.second);
+    }
     printf("\n");
 }
 
