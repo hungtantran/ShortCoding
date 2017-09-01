@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Rand", "Project1\Project1.v
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Graph", "Graph\Graph.vcxproj", "{073060E9-B7C1-40CC-A541-0612EDDC4CAD}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ParallelProgramming", "ParallelProgramming\ParallelProgramming.vcxproj", "{5AFAFDDF-FA58-4BA1-A384-25F090B04A77}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Mixed Platforms = Debug|Mixed Platforms
@@ -41,6 +43,18 @@ Global
 		{073060E9-B7C1-40CC-A541-0612EDDC4CAD}.Release|Win32.Build.0 = Release|Win32
 		{073060E9-B7C1-40CC-A541-0612EDDC4CAD}.Release|x86.ActiveCfg = Release|Win32
 		{073060E9-B7C1-40CC-A541-0612EDDC4CAD}.Release|x86.Build.0 = Release|Win32
+		{5AFAFDDF-FA58-4BA1-A384-25F090B04A77}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{5AFAFDDF-FA58-4BA1-A384-25F090B04A77}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{5AFAFDDF-FA58-4BA1-A384-25F090B04A77}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5AFAFDDF-FA58-4BA1-A384-25F090B04A77}.Debug|Win32.Build.0 = Debug|Win32
+		{5AFAFDDF-FA58-4BA1-A384-25F090B04A77}.Debug|x86.ActiveCfg = Debug|Win32
+		{5AFAFDDF-FA58-4BA1-A384-25F090B04A77}.Debug|x86.Build.0 = Debug|Win32
+		{5AFAFDDF-FA58-4BA1-A384-25F090B04A77}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{5AFAFDDF-FA58-4BA1-A384-25F090B04A77}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{5AFAFDDF-FA58-4BA1-A384-25F090B04A77}.Release|Win32.ActiveCfg = Release|Win32
+		{5AFAFDDF-FA58-4BA1-A384-25F090B04A77}.Release|Win32.Build.0 = Release|Win32
+		{5AFAFDDF-FA58-4BA1-A384-25F090B04A77}.Release|x86.ActiveCfg = Release|Win32
+		{5AFAFDDF-FA58-4BA1-A384-25F090B04A77}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -231,7 +231,8 @@ void dijkstra_5(vector<vector<int>> matrix, pair<int, int> start) {
     HelperMethod::printMatrix(distances);
 }
 
-int main() {
+int dijkstra() {
+//int main() {
     /* Let us create the example graph discussed above */
     vector<vector<int>> graph =
     { { 0, 4, 0, 0, 0, 0, 0, 8, 0 },
