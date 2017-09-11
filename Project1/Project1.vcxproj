@@ -88,7 +88,9 @@
     <ClCompile Include="InfixToPostfix.cpp" />
     <ClCompile Include="Inflight_Entertainment.cpp" />
     <ClCompile Include="LinkedList.cpp" />
+    <ClCompile Include="LongestCommonSubsequence.cpp" />
     <ClCompile Include="LongestConsecutivePath.cpp" />
+    <ClCompile Include="LongestPalindromicSubstring.cpp" />
     <ClCompile Include="Match_Parenthesis.cpp" />
     <ClCompile Include="Maximum_All_Subarray_Sizek.cpp" />
     <ClCompile Include="Misc.cpp" />

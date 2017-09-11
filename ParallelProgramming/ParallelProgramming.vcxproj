@@ -66,6 +66,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ConsumerProducer.cpp" />
+    <ClCompile Include="MixPanel.cpp" />
     <ClCompile Include="SimpleAsync.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

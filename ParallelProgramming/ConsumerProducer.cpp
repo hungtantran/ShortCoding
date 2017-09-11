@@ -47,8 +47,8 @@ void Producer(SharedQueue* queue, int num) {
     }
 }
 
-// int ConsumerProducer() {
-int main() {
+int ConsumerProducer() {
+// int main() {
     SharedQueue queue;
     int sum = 0;
     //vector<future<void>> consumers(10, std::move(async(launch::async, Consumer, &queue, &sum)));

@@ -14,7 +14,8 @@ int reverse(int num) {
     return reverse;
 }
 
-int main() {
+//int main() {
+int ReverseNumber() {
     cout << reverse(10) << endl;
     cout << reverse(55) << endl;
     cout << reverse(102030) << endl;
